@@ -10,18 +10,10 @@ package Interfaces;
  * 
  */
 
-public interface DatabaseAccess {
+public interface generateReport {
     
-    /* Start database connnection */  
+    /* Generate report */
     
-    void connect();
-    
-    /* Handle database query */  
-    
-    void executeQuery();
-    
-    /* End database connnection */   
-    
-    void disconnect();
+    void generateReport();
     
 }
