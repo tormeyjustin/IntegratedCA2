@@ -7,7 +7,9 @@ package ca2;
 /**
  *
  * @author Justin
+ * 
  */
+
 public class CA2 {
 
     /**
