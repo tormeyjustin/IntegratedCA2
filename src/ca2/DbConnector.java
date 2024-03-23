@@ -6,6 +6,7 @@ package ca2;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -26,7 +27,7 @@ public class DbConnector implements Interfaces.DatabaseAccess {
     private final String PASSWORD = "pooa";
     private Connection conn;
     private boolean loggedIn;
-    private String role;
+    private String userRole;
 
     @Override
     public void connect() {
@@ -40,7 +41,43 @@ public class DbConnector implements Interfaces.DatabaseAccess {
 
     @Override
     public void login(String username, String password){
-        // Check username
+        // Check connection status
+        if(conn == null) {
+            System.out.println("Database not connnected.");
+        } else {
+            // SHA256 encrypt the input password for comparison
+            PasswordEncrypt pse = new PasswordEncrypt();
+            String inputPasswordHash = pse.getSHA256Hash(password);
+            
+            System.out.println("Your pass:");
+            System.out.println(inputPasswordHash);
+            
+            // Get hashed password from database
+            String sql = "SELECT u.password_hash, r.role_name FROM collegelms.users u LEFT JOIN collegelms.user_roles r ON u.user_role = r.id WHERE u.username = ?;";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                // Set the value of the placeholder to username
+                stmt.setString(1, username);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    String dbPasswordHash = rs.getString("password_hash");
+                    String dbUserRole = rs.getString("role_name");
+                    // Check password hashes for a match and set loggedIn to true
+                    if (inputPasswordHash.equals(dbPasswordHash)) {
+                        loggedIn = true;
+                        userRole = dbUserRole;
+                        System.out.println("Logged in successfully");
+                    }
+                    System.out.println("Database pass:");
+                    System.out.println(dbPasswordHash);
+                } else {
+                    System.out.println("Username or password not found.");
+                }
+                 
+            } catch (SQLException ex) {
+                Logger.getLogger(DbConnector.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
         
         // Check password (SHA256)
         
@@ -88,6 +125,14 @@ public class DbConnector implements Interfaces.DatabaseAccess {
     @Override
     public void addUser(User user) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    public boolean isLoggedIn() {
+        return this.isLoggedIn();
+    }
+    
+    public String getRole() {
+        return this.userRole;
     }
         
 }

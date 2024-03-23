@@ -20,8 +20,15 @@ public class CA2 {
      */
     
     public static void main(String[] args) {
-                
-
+        
+        DbConnector dbConn = new DbConnector();
+        dbConn.connect();
+        
+        // Test login credentials
+        dbConn.login("admin", "java");
+        System.out.println(dbConn.getRole());
+        
+        dbConn.disconnect();
     }
-    
+        
 }
