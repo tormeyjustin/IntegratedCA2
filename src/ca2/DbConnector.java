@@ -39,22 +39,6 @@ public class DbConnector implements Interfaces.DatabaseAccess {
     }
 
     @Override
-    public ResultSet executeQuery(String query) {
-       if (conn == null ) {
-            System.out.println("Database Connnection Error");
-        } else {
-            try {
-                Statement statement = conn.createStatement();
-                ResultSet resultSet = statement.executeQuery(query);
-                return resultSet;
-            } catch (SQLException ex) {
-                Logger.getLogger(DbConnector.class.getName()).log(Level.SEVERE, null, ex);
-           }
-       }
-        return null;
-    }
-    
-    @Override
     public void login(String username, String password){
         // Check username
         
@@ -80,13 +64,20 @@ public class DbConnector implements Interfaces.DatabaseAccess {
             e.printStackTrace();
         }
     }
-    
-    public boolean isConnected() {
-        return false;
+
+    @Override
+    public void getCourseData(int courseId) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
-    public boolean isLoggedIn() {
-        return this.loggedIn;
+
+    @Override
+    public void getStudentData(int studentId) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
+    @Override
+    public void getLecturerData(int lecturerId) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+        
 }

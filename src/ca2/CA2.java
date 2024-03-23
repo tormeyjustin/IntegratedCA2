@@ -20,25 +20,8 @@ public class CA2 {
      */
     
     public static void main(String[] args) {
-        
-        // Testing DB
-        DbConnector dbConn = new DbConnector();
-        System.out.println("Logged in: " + dbConn.isLoggedIn());
-        System.out.println("Connected: " + dbConn.isConnected());
-        
-        // Connect to the database
-        dbConn.connect();
-        
-        ResultSet rs = dbConn.executeQuery("SELECT * FROM collegelms.modules");
-        System.out.println(rs);
-        
-        System.out.println("Logged in: " + dbConn.isLoggedIn());
-        System.out.println("Connected: " + dbConn.isConnected());
-        
-        // Disconnect from the database
-        dbConn.disconnect();
-        System.out.println("Logged in: " + dbConn.isLoggedIn());
-        System.out.println("Connected: " + dbConn.isConnected());
+                
+
     }
     
 }

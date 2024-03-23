@@ -16,19 +16,21 @@ import java.sql.ResultSet;
 public interface DatabaseAccess {
         
     /* Start database connnection */  
-    
     void connect();
     
-    /* Execute a databse query and return a ResultSet*/  
-    
-    ResultSet executeQuery(String query);
-    
     /* Handles login */
-    
     void login(String username, String password);
     
-    /* End database connection */   
+    /* Get data for a course */
+    void getCourseData(int courseId);
     
+    /* Get data for a student */
+    void getStudentData(int studentId);
+    
+    /* Get data for a lecturer */
+    void getLecturerData(int lecturerId);
+    
+    /* End database connection */   
     void disconnect();
     
 }
