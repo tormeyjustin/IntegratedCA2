@@ -28,6 +28,9 @@ public class CA2 {
         dbConn.login("admin", "java");
         System.out.println(dbConn.getRole());
         
+        // Test getCourseData
+        dbConn.getCourseData(1);
+        
         dbConn.disconnect();
     }
         

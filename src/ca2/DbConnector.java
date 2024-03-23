@@ -53,14 +53,20 @@ public class DbConnector implements Interfaces.DatabaseAccess {
             System.out.println(inputPasswordHash);
             
             // Get hashed password from database
-            String sql = "SELECT u.password_hash, r.role_name FROM collegelms.users u LEFT JOIN collegelms.user_roles r ON u.user_role = r.id WHERE u.username = ?;";
+            String sql =    "SELECT u.password_hash, r.role_name " + 
+                            "FROM collegelms.users u " + 
+                            "LEFT JOIN collegelms.user_roles r " +
+                            "ON u.user_role = r.id WHERE u.username = ?;";
+            
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                
                 // Set the value of the placeholder to username
                 stmt.setString(1, username);
                 ResultSet rs = stmt.executeQuery();
                 if (rs.next()) {
                     String dbPasswordHash = rs.getString("password_hash");
                     String dbUserRole = rs.getString("role_name");
+                    
                     // Check password hashes for a match and set loggedIn to true
                     if (inputPasswordHash.equals(dbPasswordHash)) {
                         loggedIn = true;
@@ -78,13 +84,6 @@ public class DbConnector implements Interfaces.DatabaseAccess {
             }
             
         }
-        
-        // Check password (SHA256)
-        
-        // Check role/access level
-        
-        // If logged in 
-        this.loggedIn = true;
         
     }
 
@@ -104,7 +103,27 @@ public class DbConnector implements Interfaces.DatabaseAccess {
 
     @Override
     public void getCourseData(int courseId) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // Check connection status
+        if(conn == null) {
+            System.out.println("Database not connnected.");
+        } else {
+            String sql =    "SELECT m.module_name AS 'Module Name', c.course_title AS 'Programme', COUNT(DISTINCT em.student_id) AS 'Number of Students Enrolled', CONCAT(u.first_name, ' ', u.last_name) AS 'Lecturer', ro.room_name AS 'Room Assigned' " +
+                            "FROM collegelms.modules m " +
+                            "JOIN collegelms.course_modules cm ON m.id = cm.module_id " +
+                            "JOIN collegelms.courses c ON cm.course_id = c.id " +
+                            "LEFT JOIN collegelms.enrolment_modules em ON cm.id = em.course_id " +
+                            "JOIN collegelms.lecturers l ON cm.lecturer_id = l.id " +
+                            "JOIN collegelms.users u ON l.user_id = u.id " +
+                            "JOIN collegelms.rooms ro ON cm.room_id = ro.id " +
+                            "GROUP BY m.module_name, c.course_title, u.first_name, u.last_name, ro.room_name " +
+                            "ORDER BY 'Module Name'";
+            System.out.println(sql);
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                ResultSet rs = stmt.executeQuery();
+        }   catch (SQLException ex) {
+                Logger.getLogger(DbConnector.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     @Override
@@ -127,6 +146,8 @@ public class DbConnector implements Interfaces.DatabaseAccess {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
+    
+
     public boolean isLoggedIn() {
         return this.isLoggedIn();
     }

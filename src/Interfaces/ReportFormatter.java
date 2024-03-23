@@ -4,16 +4,23 @@
  */
 package Interfaces;
 
+import java.sql.ResultSet;
+
 /**
  *
  * @author Justin
  * 
  */
 
-public interface generateReport {
+public interface ReportFormatter {
     
-    /* Generate report */
+    // Generate .txt report
+    void txtOutput(ResultSet rs);
     
-    void generateReport();
+    // Generate .csv report
+    void csvOutput(ResultSet rs);
+    
+    // Output to console
+    void consoleOutput(ResultSet rs);
     
 }
