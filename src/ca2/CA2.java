@@ -16,7 +16,15 @@ public class CA2 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        
+        // Testing DB
+        DbConnector dbConnector = new DbConnector();
+        
+        // Connect to the database
+        dbConnector.connect();
+        
+        // Disconnect from the database
+        dbConnector.disconnect();
     }
     
 }

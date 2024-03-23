@@ -11,16 +11,20 @@ package Interfaces;
  */
 
 public interface DatabaseAccess {
-    
+        
     /* Start database connnection */  
     
     void connect();
     
     /* Handle database query */  
     
-    void executeQuery();
+    void executeQuery(String query);
     
-    /* End database connnection */   
+    /* Handles login */
+    
+    boolean login(String username, String password);
+    
+    /* End database connection */   
     
     void disconnect();
     
