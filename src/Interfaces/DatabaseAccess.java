@@ -4,6 +4,9 @@
  */
 package Interfaces;
 
+import java.sql.ResultSet;
+
+
 /**
  *
  * @author Justin
@@ -16,13 +19,13 @@ public interface DatabaseAccess {
     
     void connect();
     
-    /* Handle database query */  
+    /* Execute a databse query and return a ResultSet*/  
     
-    void executeQuery(String query);
+    ResultSet executeQuery(String query);
     
     /* Handles login */
     
-    boolean login(String username, String password);
+    void login(String username, String password);
     
     /* End database connection */   
     

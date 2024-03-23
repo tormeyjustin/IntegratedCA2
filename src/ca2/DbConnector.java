@@ -6,11 +6,11 @@ package ca2;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -24,12 +24,14 @@ public class DbConnector implements Interfaces.DatabaseAccess {
     private final String DB_URL = "jdbc:mysql://localhost/collegelms";
     private final String USER = "pooa";
     private final String PASSWORD = "pooa";
+    private Connection conn;
+    private boolean loggedIn;
     private String role;
 
     @Override
     public void connect() {
         try {
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+            conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
             System.out.println("Database sucessfully connected;");
         } catch (Exception e) {
             e.printStackTrace();
@@ -37,30 +39,32 @@ public class DbConnector implements Interfaces.DatabaseAccess {
     }
 
     @Override
-    public void executeQuery(String query) {
-        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(query)) {
-
-        while (rs.next()) {
-            String moduleId = rs.getString("module_id");
-            String moduleName = rs.getString("module_name");
-            System.out.println("Module ID: " + moduleId + ", Module Name: " + moduleName);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public ResultSet executeQuery(String query) {
+       if (conn == null ) {
+            System.out.println("Database Connnection Error");
+        } else {
+            try {
+                Statement statement = conn.createStatement();
+                ResultSet resultSet = statement.executeQuery(query);
+                return resultSet;
+            } catch (SQLException ex) {
+                Logger.getLogger(DbConnector.class.getName()).log(Level.SEVERE, null, ex);
+           }
+       }
+        return null;
     }
     
     @Override
-    public boolean login(String username, String password){
+    public void login(String username, String password){
         // Check username
         
         // Check password (SHA256)
         
         // Check role/access level
         
-        return true;
+        // If logged in 
+        this.loggedIn = true;
+        
     }
 
     @Override
@@ -70,12 +74,19 @@ public class DbConnector implements Interfaces.DatabaseAccess {
             if (conn != null && !conn.isClosed()) {
                 conn.close();
                 System.out.println("Disconnected from the database.");
+                
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
     
+    public boolean isConnected() {
+        return false;
+    }
     
+    public boolean isLoggedIn() {
+        return this.loggedIn;
+    }
     
 }
