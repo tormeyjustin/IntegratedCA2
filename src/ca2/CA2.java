@@ -5,6 +5,7 @@
 package ca2;
 
 import java.sql.ResultSet;
+import java.util.HashMap;
 
 /**
  *
@@ -21,15 +22,24 @@ public class CA2 {
     
     public static void main(String[] args) {
         
-        DbConnector dbConn = new DbConnector();
+        // Start the menu
+        Menu mainMenu = new Menu();
+        
+        // Get login credentials
+        HashMap credentials = mainMenu.getLoginCredentials();
+        System.out.println(credentials);
+        
+        // Connect to database
+        DbConnector dbConn = new DbConnector();        
         dbConn.connect();
         
-        // Test login credentials
-        dbConn.login("admin", "java");
-        System.out.println(dbConn.getRole());
+        // Cast HashMap values to strings and login
+        dbConn.login((String) credentials.get("username"), (String) credentials.get("password"));
+        //System.out.println(dbConn.getRole());
+        
         
         // Test getCourseData
-        dbConn.getCourseData(1);
+        //dbConn.getCourseData(1);
         
         dbConn.disconnect();
     }

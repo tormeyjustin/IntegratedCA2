@@ -9,7 +9,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,7 +25,9 @@ public class DbConnector implements Interfaces.DatabaseAccess {
     private final String USER = "pooa";
     private final String PASSWORD = "pooa";
     private Connection conn;
+    // Logged in to DB status
     private boolean loggedIn;
+    // Logged in role
     private String userRole;
 
     @Override
