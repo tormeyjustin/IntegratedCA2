@@ -55,6 +55,7 @@ public class Menu implements Interfaces.AppMenu {
         String availableOptions = "ax";
         
         // (a) Option for all users
+        System.out.println(separator);
         System.out.println("Main Menu");
         System.out.println(separator);
         System.out.println("Please choose from the following options");
@@ -138,13 +139,15 @@ public class Menu implements Interfaces.AppMenu {
         System.out.println("(2) Student Report");
         System.out.println("(3) Lecturer Report");
         
-        selection = getMenuOption(3);
-        return selection;
+        int reportType = getMenuOption(3);
+        int reportFormat = reportFormatOptions();
+        return reportType;
+                
     }
     
     @Override
     public int reportFormatOptions() {
-        System.out.println("Availale Report Formats:");
+        System.out.println("Available Report Formats:");
         System.out.println("(1) Text file");
         System.out.println("(2) CSV File");
         System.out.println("(3) Console Output");

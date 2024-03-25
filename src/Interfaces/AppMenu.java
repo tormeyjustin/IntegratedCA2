@@ -4,8 +4,6 @@
  */
 package Interfaces;
 
-import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -17,7 +15,7 @@ public interface AppMenu {
     // Request user input and return a Hashmap with key / value pairs for username and password
     public HashMap<String, String> getLoginCredentials();
     
-    //  Display menu options based on role  
+    //  Display filtered menu options based based on user role  
     public char mainMenuOptions(String role);
     
     // Process main menu selected option
@@ -25,7 +23,7 @@ public interface AppMenu {
     
     // Manage account menu
     public void manageAccountMenu();
-    
+        
     // Run a report menu
     public void runReportMenu();
     

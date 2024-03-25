@@ -26,20 +26,25 @@ public class CA2 {
         Menu mainMenu = new Menu();
         
         // Get login credentials saved in a HashMap
-        //HashMap credentials = mainMenu.getLoginCredentials();
+        HashMap credentials = mainMenu.getLoginCredentials();
         
         // Connect to database
         DbConnector dbConn = new DbConnector();        
         dbConn.connect();       
         
         // Cast HashMap values to strings and login
-        //dbConn.login((String) credentials.get("username"), (String) credentials.get("password"));
-        dbConn.login("admin", "java");
+        dbConn.login((String) credentials.get("username"), (String) credentials.get("password"));
+
         // Check if logged in
         if (dbConn.isLoggedIn()) {
+            
+            // Get user role from the database
             String role = dbConn.getRole();
-            // Main menu options
+            
+            // Main menu options filtered by role
             char selected = mainMenu.mainMenuOptions(role);
+            
+            // Display 
             mainMenu.mainSelectedOption(selected);
         }
         
