@@ -70,6 +70,8 @@ public class DbConnector implements Interfaces.DatabaseAccess {
                         loggedIn = true;
                         userRole = dbUserRole;
                         System.out.println("Logged in successfully");
+                    } else {
+                        System.out.println("Username or password not found.");
                     }
                     
                 } else {

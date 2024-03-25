@@ -21,16 +21,16 @@ public class CA2 {
      */
     
     public static void main(String[] args) {
-        
+               
         // Start the menu
         Menu mainMenu = new Menu();
         
-        // Get login credentials saved in a HashMap
-        HashMap credentials = mainMenu.getLoginCredentials();
-        
         // Connect to database
-        DbConnector dbConn = new DbConnector();        
-        dbConn.connect();       
+        DbConnector dbConn = new DbConnector();              
+        dbConn.connect();
+        
+        // Get login credentials and store in a HashMap
+        HashMap credentials = mainMenu.getLoginCredentials();
         
         // Cast HashMap values to strings and login
         dbConn.login((String) credentials.get("username"), (String) credentials.get("password"));
@@ -46,8 +46,7 @@ public class CA2 {
             
             // Display 
             mainMenu.mainSelectedOption(selected);
-        }
-        
+        }         
         
         // Disconnect from database
         dbConn.disconnect();

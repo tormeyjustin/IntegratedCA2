@@ -14,10 +14,12 @@ import java.util.Scanner;
  */
 
 public class Menu implements Interfaces.AppMenu {
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
     public static String appRole;
-    public static char selectedOption = 'x';
-    private String separator = "-------------------------------";
+    public static char selectedOption;
+    public static String reportType = null;
+    public static String reportFormat = null;
+    private final String separator = "-------------------------------";
 
 
     @Override
@@ -104,7 +106,7 @@ public class Menu implements Interfaces.AppMenu {
                 manageAccountMenu();
                 break;
             case 'r':
-                runReportMenu();
+                reportTypeOptions();
                 break;
             case 'u':
                 manageUsersMenu();
@@ -120,40 +122,70 @@ public class Menu implements Interfaces.AppMenu {
         System.out.println(separator);
     }
 
+    
     @Override
-    public void runReportMenu() {
+    public void reportTypeOptions () {
         System.out.println(separator);
         System.out.println("Run a Report");
         System.out.println(separator);
-        
-        // Display available report format options
-        reportTypeOptions();
-    }
-    
-    @Override
-    public int reportTypeOptions() {
-        int selection;
         
         System.out.println("Available Report Types:");
         System.out.println("(1) Course Report");
         System.out.println("(2) Student Report");
         System.out.println("(3) Lecturer Report");
         
-        int reportType = getMenuOption(3);
-        int reportFormat = reportFormatOptions();
-        return reportType;
-                
+        while (reportType == null) {
+            int selection = scanner.nextInt();
+
+            switch (selection) {
+                case 1:
+                    reportType = ReportType.COURSE.name();
+                    break;
+                case 2:
+                    reportType = ReportType.STUDENT.name();
+                    break;
+                case 3:
+                    reportType = ReportType.LECTURER.name();
+                    break;
+                default:
+                    reportType = null;
+                    break;
+            }
+        }
+        
+        // Show menu for report format
+        reportFormatOptions();
     }
+        
     
     @Override
-    public int reportFormatOptions() {
+    public void reportFormatOptions() {
+        
         System.out.println("Available Report Formats:");
         System.out.println("(1) Text file");
         System.out.println("(2) CSV File");
         System.out.println("(3) Console Output");
+            
+        while (reportFormat == null) {
+            int selection = scanner.nextInt();
+
+            switch (selection) {
+                case 1:
+                    reportFormat = ReportFormat.TXT.name();
+                    break;
+                case 2:
+                    reportFormat = ReportFormat.CSV.name();
+                    break;
+                case 3:
+                    reportFormat = ReportFormat.CONSOLE.name();
+                    break;
+                default:
+                    System.out.println("Please choose from one of the options.");
+                    break;
+            }
+        }
         
-        int selection = getMenuOption(3); 
-        return selection;
+        System.out.println("You have selected " + reportType + " reportaa in " + reportFormat + " format.");
     }
     
     @Override
@@ -177,5 +209,12 @@ public class Menu implements Interfaces.AppMenu {
         
         return userInput;
     }
-           
+    
+    public String getReportType(){
+        return reportType;
+    }
+    
+    public String getReportFormat(){
+        return reportFormat;
+    }
 }

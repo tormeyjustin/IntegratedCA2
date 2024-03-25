@@ -9,9 +9,28 @@ import java.util.HashMap;
 /**
  *
  * @author Justin
+ * 
  */
+
 public interface AppMenu {
     
+    // Enum declarations
+    
+    // Report types
+    public enum ReportType {
+        COURSE,
+        STUDENT,
+        LECTURER
+    }
+    
+    // Report formats
+    public enum ReportFormat {
+        TXT,
+        CSV,
+        CONSOLE
+    }
+    
+         
     // Request user input and return a Hashmap with key / value pairs for username and password
     public HashMap<String, String> getLoginCredentials();
     
@@ -23,15 +42,12 @@ public interface AppMenu {
     
     // Manage account menu
     public void manageAccountMenu();
-        
-    // Run a report menu
-    public void runReportMenu();
     
     // Choose report type
-    public int reportTypeOptions();
+    public void reportTypeOptions();
     
     // Choose report type
-    public int reportFormatOptions();
+    public void reportFormatOptions();
     
     // Manage Users
     public void manageUsersMenu();
