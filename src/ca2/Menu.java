@@ -15,7 +15,7 @@ import java.util.Scanner;
  */
 
 public class Menu implements Interfaces.AppMenu {
-    public static String MenuRole;
+    public static String appRole;
 
 
     @Override
@@ -50,8 +50,52 @@ public class Menu implements Interfaces.AppMenu {
 
 
     @Override
-    public int mainOptions() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public char mainOptions(String role) {
+        Menu.appRole = role;
+        boolean validOption = false;
+        
+        // String to hold the avilable options
+        // each chracter represents an option
+        String availableOptions = "ax";
+        
+        // (a) Option for all users
+        System.out.println("Please choose from the following options");
+        System.out.println("(a) Manage my account");
+        
+        // (r) Option for "office" or "lecturer" only
+        if (role.equals("office") || (role.equals("lecturer"))) {
+            availableOptions = availableOptions + "r";
+            System.out.println("(r) Run reports");
+        }
+        
+        // (u) Option for "admin" only
+        if (role.equals("admin")) {
+            availableOptions = availableOptions + "u";
+            System.out.println("(u) Manage users");
+        }
+        
+        // (x) Option for all users
+        System.out.println("(x) Exit"); 
+        
+        // Get a single character option and check
+        Scanner sc = new Scanner(System.in);
+
+        // Get the option
+        char selectedOption = sc.next().toLowerCase().charAt(0);
+        //System.out.println(selected);
+
+        // Check if the input character is present in the availableOptions
+        if (availableOptions.indexOf(selectedOption) != -1) {
+            validOption = true;
+            System.out.println(selectedOption);
+        } else {
+            System.out.println("Invalid selection");
+        }
+
+        sc.close();
+        System.out.println(selectedOption);
+        
+        return selectedOption;
     }
     
 }

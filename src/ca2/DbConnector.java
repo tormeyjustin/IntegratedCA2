@@ -25,8 +25,8 @@ public class DbConnector implements Interfaces.DatabaseAccess {
     private final String USER = "pooa";
     private final String PASSWORD = "pooa";
     private Connection conn;
-    // Logged in to DB status
-    private boolean loggedIn;
+    // Logged in to DB status for an app user
+    public boolean loggedIn = false;
     // Logged in role
     private String userRole;
 
@@ -49,10 +49,7 @@ public class DbConnector implements Interfaces.DatabaseAccess {
             // SHA256 encrypt the input password for comparison
             PasswordEncrypt pse = new PasswordEncrypt();
             String inputPasswordHash = pse.getSHA256Hash(password);
-            
-            System.out.println("Your pass:");
-            System.out.println(inputPasswordHash);
-            
+                        
             // Get hashed password from database
             String sql =    "SELECT u.password_hash, r.role_name " + 
                             "FROM collegelms.users u " + 
@@ -74,8 +71,7 @@ public class DbConnector implements Interfaces.DatabaseAccess {
                         userRole = dbUserRole;
                         System.out.println("Logged in successfully");
                     }
-                    System.out.println("Database pass:");
-                    System.out.println(dbPasswordHash);
+                    
                 } else {
                     System.out.println("Username or password not found.");
                 }
@@ -150,7 +146,7 @@ public class DbConnector implements Interfaces.DatabaseAccess {
     
 
     public boolean isLoggedIn() {
-        return this.isLoggedIn();
+        return this.loggedIn;
     }
     
     public String getRole() {

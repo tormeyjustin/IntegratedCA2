@@ -14,9 +14,10 @@ import java.util.HashMap;
  */
 public interface AppMenu {
     
+    // Request user input and return a Hashmap with key / value pairs for username and password
     public HashMap<String, String> getLoginCredentials();
     
-      
-    public int mainOptions();
+    //  Display menu options based on role  
+    public char mainOptions(String role);
     
 }
