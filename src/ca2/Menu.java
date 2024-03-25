@@ -14,8 +14,10 @@ import java.util.Scanner;
  */
 
 public class Menu implements Interfaces.AppMenu {
+    private Scanner scanner = new Scanner(System.in);
     public static String appRole;
     public static char selectedOption = 'x';
+    private String separator = "-------------------------------";
 
 
     @Override
@@ -23,9 +25,6 @@ public class Menu implements Interfaces.AppMenu {
         String username;
         String password;
         HashMap<String, String> credentials = new HashMap();
-        
-        // Create a Scanner object to read input from the console
-        Scanner scanner = new Scanner(System.in);
         
         System.out.println("Enter username:");
         
@@ -40,9 +39,6 @@ public class Menu implements Interfaces.AppMenu {
         // Add keys and values
         credentials.put("username", username);
         credentials.put("password", password);
-
-        // Close the scanner
-        scanner.close();
         
         return credentials;
         
@@ -50,7 +46,7 @@ public class Menu implements Interfaces.AppMenu {
 
 
     @Override
-    public char mainOptions(String role) {
+    public char mainMenuOptions(String role) {
         Menu.appRole = role;
         boolean validOption = false;
         
@@ -59,6 +55,8 @@ public class Menu implements Interfaces.AppMenu {
         String availableOptions = "ax";
         
         // (a) Option for all users
+        System.out.println("Main Menu");
+        System.out.println(separator);
         System.out.println("Please choose from the following options");
         System.out.println("(a) Manage my account");
         
@@ -78,12 +76,10 @@ public class Menu implements Interfaces.AppMenu {
         // (x) Option for all users
         System.out.println("(x) Exit"); 
         
-        // Get a single character option and check
-        Scanner sc = new Scanner(System.in);
-        
+        // Get a single character option and check       
         do {
             // Get the option
-            selectedOption = sc.next().toLowerCase().charAt(0);
+            selectedOption = scanner.next().toLowerCase().charAt(0);
 
             // Check if the input character is present in the availableOptions
             if (availableOptions.indexOf(selectedOption) != -1) {
@@ -92,8 +88,6 @@ public class Menu implements Interfaces.AppMenu {
                 System.out.println("Invalid selection. Please choose from the options above");
             }
         } while (validOption == false);
-
-        sc.close();
        
         return selectedOption;
     }
@@ -106,26 +100,79 @@ public class Menu implements Interfaces.AppMenu {
                 System.out.println("Exiting application");
                 System.exit(0);
             case 'a':
-                manageAccount();
+                manageAccountMenu();
                 break;
             case 'r':
-                System.out.println("Run a Report");
+                runReportMenu();
                 break;
             case 'u':
-                System.out.println("Manage Users");
+                manageUsersMenu();
                 break;
         }
      
     }
 
     @Override
-    public void manageAccount() {
-        System.out.println("Manage Account\n==============");
+    public void manageAccountMenu() {
+        System.out.println(separator);
+        System.out.println("Manage Account");
+        System.out.println(separator);
     }
 
     @Override
-    public void runReport() {
-        System.out.println("Run a Reportr\n==============");
+    public void runReportMenu() {
+        System.out.println(separator);
+        System.out.println("Run a Report");
+        System.out.println(separator);
+        
+        // Display available report format options
+        reportTypeOptions();
     }
     
+    @Override
+    public int reportTypeOptions() {
+        int selection;
+        
+        System.out.println("Available Report Types:");
+        System.out.println("(1) Course Report");
+        System.out.println("(2) Student Report");
+        System.out.println("(3) Lecturer Report");
+        
+        selection = getMenuOption(3);
+        return selection;
+    }
+    
+    @Override
+    public int reportFormatOptions() {
+        System.out.println("Availale Report Formats:");
+        System.out.println("(1) Text file");
+        System.out.println("(2) CSV File");
+        System.out.println("(3) Console Output");
+        
+        int selection = getMenuOption(3); 
+        return selection;
+    }
+    
+    @Override
+    public void manageUsersMenu() {
+        System.out.println(separator);
+        System.out.println("Manage Users");
+        System.out.println(separator);
+    } 
+    
+    public int getMenuOption(int max) {
+        int userInput;
+        
+        do {
+            System.out.print("Enter a number between 1 and " + max + ": ");
+            while (!scanner.hasNextInt()) {
+                System.out.println("That's not a valid number! Please enter a valid number: ");
+                scanner.next();
+            }
+            userInput = scanner.nextInt();
+        } while (userInput < 1 || userInput > max);
+        
+        return userInput;
+    }
+           
 }

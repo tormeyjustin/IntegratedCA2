@@ -18,14 +18,23 @@ public interface AppMenu {
     public HashMap<String, String> getLoginCredentials();
     
     //  Display menu options based on role  
-    public char mainOptions(String role);
+    public char mainMenuOptions(String role);
     
     // Process main menu selected option
     public void mainSelectedOption(char opt);
     
     // Manage account menu
-    public void manageAccount();
+    public void manageAccountMenu();
     
     // Run a report menu
-    public void runReport();
+    public void runReportMenu();
+    
+    // Choose report type
+    public int reportTypeOptions();
+    
+    // Choose report type
+    public int reportFormatOptions();
+    
+    // Manage Users
+    public void manageUsersMenu();
 }
