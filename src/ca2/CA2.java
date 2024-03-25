@@ -39,7 +39,8 @@ public class CA2 {
         if (dbConn.isLoggedIn()) {
             String role = dbConn.getRole();
             // Main menu options
-            mainMenu.mainOptions(role);
+            char selected = mainMenu.mainOptions(role);
+            mainMenu.mainSelectedOption(selected);
         }
         
         

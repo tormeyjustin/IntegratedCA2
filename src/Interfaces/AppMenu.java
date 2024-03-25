@@ -20,4 +20,12 @@ public interface AppMenu {
     //  Display menu options based on role  
     public char mainOptions(String role);
     
+    // Process main menu selected option
+    public void mainSelectedOption(char opt);
+    
+    // Manage account menu
+    public void manageAccount();
+    
+    // Run a report menu
+    public void runReport();
 }

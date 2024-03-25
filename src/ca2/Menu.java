@@ -4,7 +4,6 @@
  */
 package ca2;
 
-import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -16,6 +15,7 @@ import java.util.Scanner;
 
 public class Menu implements Interfaces.AppMenu {
     public static String appRole;
+    public static char selectedOption = 'x';
 
 
     @Override
@@ -63,7 +63,8 @@ public class Menu implements Interfaces.AppMenu {
         System.out.println("(a) Manage my account");
         
         // (r) Option for "office" or "lecturer" only
-        if (role.equals("office") || (role.equals("lecturer"))) {
+        // TEMPORARILY ADDED ADMIN FOR TESTING
+        if (role.equals("office") || (role.equals("lecturer")) || (role.equals("admin"))) {
             availableOptions = availableOptions + "r";
             System.out.println("(r) Run reports");
         }
@@ -79,23 +80,52 @@ public class Menu implements Interfaces.AppMenu {
         
         // Get a single character option and check
         Scanner sc = new Scanner(System.in);
+        
+        do {
+            // Get the option
+            selectedOption = sc.next().toLowerCase().charAt(0);
 
-        // Get the option
-        char selectedOption = sc.next().toLowerCase().charAt(0);
-        //System.out.println(selected);
-
-        // Check if the input character is present in the availableOptions
-        if (availableOptions.indexOf(selectedOption) != -1) {
-            validOption = true;
-            System.out.println(selectedOption);
-        } else {
-            System.out.println("Invalid selection");
-        }
+            // Check if the input character is present in the availableOptions
+            if (availableOptions.indexOf(selectedOption) != -1) {
+                validOption = true;
+            } else {
+                System.out.println("Invalid selection. Please choose from the options above");
+            }
+        } while (validOption == false);
 
         sc.close();
-        System.out.println(selectedOption);
-        
+       
         return selectedOption;
+    }
+
+    @Override
+    public void mainSelectedOption(char opt) {
+        switch(opt) {
+            case 'x':
+                // Exit application
+                System.out.println("Exiting application");
+                System.exit(0);
+            case 'a':
+                manageAccount();
+                break;
+            case 'r':
+                System.out.println("Run a Report");
+                break;
+            case 'u':
+                System.out.println("Manage Users");
+                break;
+        }
+     
+    }
+
+    @Override
+    public void manageAccount() {
+        System.out.println("Manage Account\n==============");
+    }
+
+    @Override
+    public void runReport() {
+        System.out.println("Run a Reportr\n==============");
     }
     
 }
