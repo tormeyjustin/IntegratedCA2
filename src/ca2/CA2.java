@@ -44,8 +44,27 @@ public class CA2 {
             // Main menu options filtered by role
             char selected = mainMenu.mainMenuOptions(role);
             
-            // Display 
-            mainMenu.mainSelectedOption(selected);
+            // Display second level menus
+            switch(selected) {
+                case 'x':
+                    // Exit application
+                    System.out.println("Exiting application");
+                    System.exit(0);
+                case 'a':
+                    mainMenu.manageAccountMenu();
+                    // Do account managment
+                    break;
+                case 'r':
+                    HashMap report = mainMenu.reportFormatOptions();
+                    // Ouput report
+                    break;
+                case 'u':
+                    mainMenu.manageUsersMenu();
+                    // Manage users
+                    break;
+            }
+
+            // Do something with menu selections
         }         
         
         // Disconnect from database

@@ -29,6 +29,7 @@ public class DbConnector implements Interfaces.DatabaseAccess {
     public boolean loggedIn = false;
     // Logged in role
     private String userRole;
+    private int userId;
 
     @Override
     public void connect() {
@@ -51,7 +52,7 @@ public class DbConnector implements Interfaces.DatabaseAccess {
             String inputPasswordHash = pse.getSHA256Hash(password);
                         
             // Get hashed password from database
-            String sql =    "SELECT u.password_hash, r.role_name " + 
+            String sql =    "SELECT u.id, u.password_hash, r.role_name " + 
                             "FROM collegelms.users u " + 
                             "LEFT JOIN collegelms.user_roles r " +
                             "ON u.user_role = r.id WHERE u.username = ?;";
@@ -63,12 +64,14 @@ public class DbConnector implements Interfaces.DatabaseAccess {
                 ResultSet rs = stmt.executeQuery();
                 if (rs.next()) {
                     String dbPasswordHash = rs.getString("password_hash");
-                    String dbUserRole = rs.getString("role_name");
+                    
                     
                     // Check password hashes for a match and set loggedIn to true
                     if (inputPasswordHash.equals(dbPasswordHash)) {
                         loggedIn = true;
-                        userRole = dbUserRole;
+                        userRole = rs.getString("role_name");
+                        userId = Integer.valueOf(rs.getString("id"));
+                        
                         System.out.println("Logged in successfully");
                     } else {
                         System.out.println("Username or password not found.");
@@ -116,7 +119,6 @@ public class DbConnector implements Interfaces.DatabaseAccess {
                             "JOIN collegelms.rooms ro ON cm.room_id = ro.id " +
                             "GROUP BY m.module_name, c.course_title, u.first_name, u.last_name, ro.room_name " +
                             "ORDER BY 'Module Name'";
-            System.out.println(sql);
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                 ResultSet rs = stmt.executeQuery();
         }   catch (SQLException ex) {
@@ -124,6 +126,25 @@ public class DbConnector implements Interfaces.DatabaseAccess {
             }
         }
     }
+    
+    @Override
+    public void modifyUser(String userId, String username, String password) {
+        // Check connection status
+        if(conn == null) {
+            System.out.println("Database not connnected.");
+        } else {
+            String sql =    "";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                // Set the value of the placeholder to user ID
+                stmt.setString(1, userId);
+                ResultSet rs = stmt.executeQuery();
+        }   catch (SQLException ex) {
+                Logger.getLogger(DbConnector.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+        
 
     @Override
     public void getStudentData(int studentId) {
@@ -151,8 +172,12 @@ public class DbConnector implements Interfaces.DatabaseAccess {
         return this.loggedIn;
     }
     
+    public int getId(){
+        return this.userId;
+    }
     public String getRole() {
         return this.userRole;
     }
-        
+
+    
 }

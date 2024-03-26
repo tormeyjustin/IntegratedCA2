@@ -37,6 +37,9 @@ public interface DatabaseAccess {
     // Add a new user
     void addUser(User user);
     
+    // Update user account credentials
+    void modifyUser(String userId, String username, String password);
+    
     // Close database connection
     void disconnect();
     

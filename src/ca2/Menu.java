@@ -26,6 +26,13 @@ public class Menu implements Interfaces.AppMenu {
     public HashMap<String, String> getLoginCredentials() {
         String username;
         String password;
+        
+        System.out.println(separator);
+        System.out.println(separator);
+        System.out.println("  College LMS");
+        System.out.println(separator);
+        System.out.println(separator);
+        
         HashMap<String, String> credentials = new HashMap();
         
         System.out.println("Enter username:");
@@ -96,35 +103,21 @@ public class Menu implements Interfaces.AppMenu {
     }
 
     @Override
-    public void mainSelectedOption(char opt) {
-        switch(opt) {
-            case 'x':
-                // Exit application
-                System.out.println("Exiting application");
-                System.exit(0);
-            case 'a':
-                manageAccountMenu();
-                break;
-            case 'r':
-                reportTypeOptions();
-                break;
-            case 'u':
-                manageUsersMenu();
-                break;
-        }
-     
-    }
-
-    @Override
     public void manageAccountMenu() {
         System.out.println(separator);
         System.out.println("Manage Account");
         System.out.println(separator);
+        
+        System.out.println("Account Options:");
+        System.out.println("(1) Change username");
+        System.out.println("(2) Change password");
+        
+        getMenuOption(2);
     }
-
+        
     
     @Override
-    public void reportTypeOptions () {
+    public HashMap<String, String>  reportFormatOptions() {
         System.out.println(separator);
         System.out.println("Run a Report");
         System.out.println(separator);
@@ -148,18 +141,12 @@ public class Menu implements Interfaces.AppMenu {
                     reportType = ReportType.LECTURER.name();
                     break;
                 default:
-                    reportType = null;
+                    System.out.println("Please choose one of the options.");
                     break;
             }
         }
         
-        // Show menu for report format
-        reportFormatOptions();
-    }
-        
-    
-    @Override
-    public void reportFormatOptions() {
+        HashMap<String, String> report = new HashMap();
         
         System.out.println("Available Report Formats:");
         System.out.println("(1) Text file");
@@ -185,7 +172,12 @@ public class Menu implements Interfaces.AppMenu {
             }
         }
         
-        System.out.println("You have selected " + reportType + " reportaa in " + reportFormat + " format.");
+        System.out.println("You have selected " + reportType + " report, in " + reportFormat + " format.");
+        
+        // Add keys and values
+        report.put("type", reportType);
+        report.put("format", reportFormat);
+        return report;
     }
     
     @Override
@@ -201,7 +193,7 @@ public class Menu implements Interfaces.AppMenu {
         do {
             System.out.print("Enter a number between 1 and " + max + ": ");
             while (!scanner.hasNextInt()) {
-                System.out.println("That's not a valid number! Please enter a valid number: ");
+                System.out.println("Please enter a valid number: ");
                 scanner.next();
             }
             userInput = scanner.nextInt();

@@ -37,17 +37,13 @@ public interface AppMenu {
     //  Display filtered menu options based based on user role  
     public char mainMenuOptions(String role);
     
-    // Process main menu selected option
-    public void mainSelectedOption(char opt);
-    
+   
     // Manage account menu
     public void manageAccountMenu();
     
-    // Choose report type
-    public void reportTypeOptions();
     
     // Choose report type
-    public void reportFormatOptions();
+    public HashMap<String, String> reportFormatOptions();
     
     // Manage Users
     public void manageUsersMenu();
