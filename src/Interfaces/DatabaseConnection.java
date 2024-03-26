@@ -4,23 +4,18 @@
  */
 package Interfaces;
 
-import java.sql.ResultSet;
-
 /**
  *
  * @author Justin
- * 
  */
-
-public interface ReportFormatter {
+public interface DatabaseConnection {
     
-    // Generate .txt report
-    void txtOutput(ResultSet rs);
+    public void connect();
     
-    // Generate .csv report
-    void csvOutput(ResultSet rs);
+    public void login(String username, String password);
     
-    // Output to console
-    void consoleOutput(ResultSet rs);
+    public void executeQuery(String sqlQuery);
+    
+    public void disconnect();
     
 }

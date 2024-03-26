@@ -4,6 +4,7 @@
  */
 package ca2;
 
+import Utils.PasswordEncrypt;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -19,14 +20,16 @@ import java.util.logging.Logger;
  * 
  */
 
-public class DbConnector implements Interfaces.DatabaseAccess {
+public class MySQLDatabaseConnection implements Interfaces.DatabaseConnection {
     // DB credentials
     private final String DB_URL = "jdbc:mysql://localhost/collegelms";
     private final String USER = "pooa";
     private final String PASSWORD = "pooa";
     private Connection conn;
+    
     // Logged in to DB status for an app user
     public boolean loggedIn = false;
+    
     // Logged in role
     private String userRole;
     private int userId;
@@ -82,11 +85,16 @@ public class DbConnector implements Interfaces.DatabaseAccess {
                 }
                  
             } catch (SQLException ex) {
-                Logger.getLogger(DbConnector.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Error " + ex);
             }
             
         }
         
+    }
+    
+    @Override
+    public void executeQuery(String sqlQuery) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
@@ -102,75 +110,8 @@ public class DbConnector implements Interfaces.DatabaseAccess {
             e.printStackTrace();
         }
     }
-
-    @Override
-    public void getCourseData(int courseId) {
-        // Check connection status
-        if(conn == null) {
-            System.out.println("Database not connnected.");
-        } else {
-            String sql =    "SELECT m.module_name AS 'Module Name', c.course_title AS 'Programme', COUNT(DISTINCT em.student_id) AS 'Number of Students Enrolled', CONCAT(u.first_name, ' ', u.last_name) AS 'Lecturer', ro.room_name AS 'Room Assigned' " +
-                            "FROM collegelms.modules m " +
-                            "JOIN collegelms.course_modules cm ON m.id = cm.module_id " +
-                            "JOIN collegelms.courses c ON cm.course_id = c.id " +
-                            "LEFT JOIN collegelms.enrolment_modules em ON cm.id = em.course_id " +
-                            "JOIN collegelms.lecturers l ON cm.lecturer_id = l.id " +
-                            "JOIN collegelms.users u ON l.user_id = u.id " +
-                            "JOIN collegelms.rooms ro ON cm.room_id = ro.id " +
-                            "GROUP BY m.module_name, c.course_title, u.first_name, u.last_name, ro.room_name " +
-                            "ORDER BY 'Module Name'";
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                ResultSet rs = stmt.executeQuery();
-        }   catch (SQLException ex) {
-                Logger.getLogger(DbConnector.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-    
-    @Override
-    public void modifyUser(String userId, String username, String password) {
-        // Check connection status
-        if(conn == null) {
-            System.out.println("Database not connnected.");
-        } else {
-            String sql =    "";
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                // Set the value of the placeholder to user ID
-                stmt.setString(1, userId);
-                ResultSet rs = stmt.executeQuery();
-        }   catch (SQLException ex) {
-                Logger.getLogger(DbConnector.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-    
-    @Override
-    public ResultSet getReportData(String reportType) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-        
-
-    @Override
-    public void getStudentData(int studentId) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void getLecturerData(int lecturerId) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public User getUser(int userId) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void addUser(User user) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
-    
+  
+    // Getters
 
     public boolean isLoggedIn() {
         return this.loggedIn;
@@ -181,7 +122,5 @@ public class DbConnector implements Interfaces.DatabaseAccess {
     }
     public String getRole() {
         return this.userRole;
-    }
-
-    
+    }  
 }

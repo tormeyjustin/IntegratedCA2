@@ -14,37 +14,9 @@ import java.util.HashMap;
 
 public interface AppMenu {
     
-    // Enum declarations
+    public HashMap<String, String>getLoginCredentials();
     
-    // Report types
-    public enum ReportType {
-        COURSE,
-        STUDENT,
-        LECTURER
-    }
+    void displayMenu();
     
-    // Report formats
-    public enum ReportFormat {
-        TXT,
-        CSV,
-        CONSOLE
-    }
-    
-         
-    // Request user input and return a Hashmap with key / value pairs for username and password
-    public HashMap<String, String> getLoginCredentials();
-    
-    //  Display filtered menu options based based on user role  
-    public char mainMenuOptions(String role);
-    
-   
-    // Manage account menu
-    public void manageAccountMenu();
-    
-    
-    // Choose report type
-    public HashMap<String, String> reportFormatOptions();
-    
-    // Manage Users
-    public void manageUsersMenu();
+    void handleAction();
 }
