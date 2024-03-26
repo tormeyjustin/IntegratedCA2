@@ -51,20 +51,23 @@ public class CA2 {
                     System.out.println("Exiting application");
                     System.exit(0);
                 case 'a':
-                    mainMenu.manageAccountMenu();
                     // Do account managment
+                    mainMenu.manageAccountMenu();
+                    
                     break;
                 case 'r':
+                    // Ouput a report
                     HashMap report = mainMenu.reportFormatOptions();
-                    // Ouput report
+                    // Get data
+                    // Ouput Report
                     break;
                 case 'u':
-                    mainMenu.manageUsersMenu();
                     // Manage users
+                    mainMenu.manageUsersMenu();
+                    
                     break;
             }
 
-            // Do something with menu selections
         }         
         
         // Disconnect from database
