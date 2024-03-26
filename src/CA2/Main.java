@@ -30,7 +30,7 @@ public class Main {
         conn.connect();
         
         // Get login credentials and store in a HashMap
-        HashMap credentials = mainMenu.getLoginCredentials();
+        HashMap credentials = conn.getLoginCredentials();
         
         // Cast HashMap values to strings and login
         conn.login((String) credentials.get("username"), (String) credentials.get("password"));
@@ -41,6 +41,7 @@ public class Main {
             // Get user role from the database
             String role = conn.getRole();
             
+            // Display main menu
             
 
         }         

@@ -10,8 +10,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.HashMap;
+import java.util.Scanner;
 
 
 /**
@@ -26,6 +26,7 @@ public class MySQLDatabaseConnection implements Interfaces.DatabaseConnection {
     private final String USER = "pooa";
     private final String PASSWORD = "pooa";
     private Connection conn;
+    private final String separator = "-------------------------------";
     
     // Logged in to DB status for an app user
     public boolean loggedIn = false;
@@ -42,6 +43,39 @@ public class MySQLDatabaseConnection implements Interfaces.DatabaseConnection {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    @Override
+    public HashMap<String, String> getLoginCredentials() {
+        Scanner sc = new Scanner(System.in);
+        String username;
+        String password;
+        
+        System.out.println(separator);
+        System.out.println(separator);
+        System.out.println("  College LMS");
+        System.out.println(separator);
+        System.out.println(separator);
+        
+        HashMap<String, String> credentials = new HashMap();
+        
+        System.out.println("Enter username:");
+        
+        // Read the username provided by the user
+        username = sc.nextLine();
+        
+        System.out.println("Enter password:");
+        
+        // Read the username provided by the user
+        password = sc.nextLine();
+        
+        // Add keys and values
+        credentials.put("username", username);
+        credentials.put("password", password);
+        
+        sc.close();
+        return credentials;
+        
     }
 
     @Override

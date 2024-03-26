@@ -4,6 +4,8 @@
  */
 package Interfaces;
 
+import java.util.HashMap;
+
 /**
  *
  * @author Justin
@@ -11,6 +13,8 @@ package Interfaces;
 public interface DatabaseConnection {
     
     public void connect();
+    
+    public HashMap<String, String>getLoginCredentials();
     
     public void login(String username, String password);
     

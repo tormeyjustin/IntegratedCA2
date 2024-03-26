@@ -4,17 +4,14 @@
  */
 package Interfaces;
 
-import java.util.HashMap;
-
 /**
  *
  * @author Justin
  * 
  */
 
-public interface AppMenu {
-        
-    void displayMenu();
+public interface ReportingTool {
     
-    void handleAction();
+    void outputReport();
+    
 }
