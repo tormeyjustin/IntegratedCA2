@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ca2;
+package CA2;
 
 import Utils.PasswordEncrypt;
 import java.sql.Connection;
@@ -127,8 +127,64 @@ public class MySQLDatabaseConnection implements Interfaces.DatabaseConnection {
     }
     
     @Override
-    public void executeQuery(String sqlQuery) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public ResultSet getReportData(String reportType, int id) {
+        // Define an empty result set
+        ResultSet rs = null;
+        if(conn == null) {
+            System.out.println("Database not connnected.");
+        } else {
+            
+            switch (reportType) {
+                case "COURSE":
+                    // Get course data
+                    System.out.println("Get course data");
+                    rs = getCourseData(id);
+                    break;
+                case "STUDENT":
+                    // Get student data
+                    System.out.println("Get Student data");
+                    break;
+                case "LECTURER":
+                    // Get lecturer data
+                    System.out.println("Get Lecturer data");
+                    break;
+            }
+             
+        }
+        
+        return rs;
+    }
+    
+    private ResultSet getCourseData(int id) {
+        ResultSet rs = null;
+        
+        String sqlquery = "SELECT m.module_name AS \"Module Name\", "
+             + "c.course_title AS \"Programme\", "
+             + "COUNT(DISTINCT em.student_id) AS \"Number of Students Enrolled\", "
+             + "CONCAT(u.first_name, ' ', u.last_name) AS \"Lecturer\", "
+             + "ro.room_name AS \"Room Assigned\" "
+             + "FROM collegelms.modules m "
+             + "JOIN collegelms.course_modules cm ON m.id = cm.module_id "
+             + "JOIN collegelms.courses c ON cm.course_id = c.id "
+             + "LEFT JOIN collegelms.enrolment_modules em ON cm.id = em.course_id "
+             + "JOIN collegelms.lecturers l ON cm.lecturer_id = l.id "
+             + "JOIN collegelms.users u ON l.user_id = u.id "
+             + "JOIN collegelms.rooms ro ON cm.room_id = ro.id "
+             + "WHERE c.id = ? " // Placeholder for the course ID
+             + "GROUP BY m.module_name, c.course_title, u.first_name, u.last_name, ro.room_name "
+             + "ORDER BY \"Module Name\"";
+        
+        try (PreparedStatement stmt = conn.prepareStatement(sqlquery)) {
+                
+                // Convert the id to String and insert into SQL statement
+                stmt.setString(1, String.valueOf(id));
+                
+                rs = stmt.executeQuery();
+        } catch (SQLException ex) {
+                System.out.println("Error " + ex);
+            }
+        
+        return rs;
     }
 
     @Override
@@ -161,4 +217,5 @@ public class MySQLDatabaseConnection implements Interfaces.DatabaseConnection {
     public String getRole() {
         return this.userRole;
     }  
+
 }

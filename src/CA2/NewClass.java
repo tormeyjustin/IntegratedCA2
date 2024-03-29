@@ -8,6 +8,6 @@ package CA2;
  *
  * @author Justin
  */
-public class User {
+public class NewClass {
     
 }
