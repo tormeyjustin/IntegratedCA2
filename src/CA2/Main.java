@@ -51,8 +51,6 @@ public class Main {
             ResultSet rs = conn.getReportData("COURSE", 1);
             System.out.println(rs);
             
-            DynamicResultHandler drh = new DynamicResultHandler();  
-            drh.processResultSet(rs, DynamicResultHandler.OutputFormat.CONSOLE);
             
             // Display main menu
             mainMenu.displayMainMenu();

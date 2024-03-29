@@ -47,33 +47,26 @@ public class MySQLDatabaseConnection implements Interfaces.DatabaseConnection {
     
     @Override
     public HashMap<String, String> getLoginCredentials() {
-        Scanner sc = new Scanner(System.in);
-        String username;
-        String password;
-        
-        System.out.println(separator);
-        System.out.println(separator);
-        System.out.println("  College LMS");
-        System.out.println(separator);
-        System.out.println(separator);
-        
-        HashMap<String, String> credentials = new HashMap();
-        
-        System.out.println("Enter username:");
-        
-        // Read the username provided by the user
-        username = sc.nextLine();
-        
-        System.out.println("Enter password:");
-        
-        // Read the username provided by the user
-        password = sc.nextLine();
-        
-        // Add keys and values
-        credentials.put("username", username);
-        credentials.put("password", password);
-        
-        sc.close();
+        HashMap<String, String> credentials;
+        try (Scanner sc = new Scanner(System.in)) {
+            String username;
+            String password;
+            System.out.println(separator);
+            System.out.println(separator);
+            System.out.println("  College LMS");
+            System.out.println(separator);
+            System.out.println(separator);
+            credentials = new HashMap();
+            System.out.println("Enter username:");
+            // Read the username provided by the user
+            username = sc.nextLine();
+            System.out.println("Enter password:");
+            // Read the username provided by the user
+            password = sc.nextLine();
+            // Add keys and values
+            credentials.put("username", username);
+            credentials.put("password", password);
+        }
         return credentials;
         
     }

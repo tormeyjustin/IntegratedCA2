@@ -32,6 +32,6 @@ public interface DatabaseConnection {
     public int getId();
     
     // Getter for user role
-    String getRole();
+    public String getRole();
     
 }
