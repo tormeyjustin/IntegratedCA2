@@ -21,7 +21,7 @@ public interface DatabaseConnection {
     
     public void login(String username, String password);
     
-    public void executeQuery(String sqlQuery);
+    public ResultSet getCourseData(int id);
     
     public void disconnect();
     
