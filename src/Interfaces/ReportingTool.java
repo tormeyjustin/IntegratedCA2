@@ -11,7 +11,18 @@ package Interfaces;
  */
 
 public interface ReportingTool {
+    enum reportType {
+        COURSE,
+        STUDENT,
+        LECTURER
+    }
     
-    void outputReport();
+    enum reportFormat {
+        TXT,
+        CSV,
+        CONSOLE
+    }
+    
+    void outputReport(reportFormat format);
     
 }

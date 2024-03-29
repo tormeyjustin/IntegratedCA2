@@ -4,12 +4,15 @@
  */
 package Interfaces;
 
+import java.sql.ResultSet;
 import java.util.HashMap;
 
 /**
  *
  * @author Justin
+ * 
  */
+
 public interface DatabaseConnection {
     
     public void connect();
@@ -21,5 +24,14 @@ public interface DatabaseConnection {
     public void executeQuery(String sqlQuery);
     
     public void disconnect();
+    
+    // Getter method to check if the user is logged in
+    boolean isLoggedIn();
+    
+    // Getter for user ID
+    public int getId();
+    
+    // Getter for user role
+    String getRole();
     
 }

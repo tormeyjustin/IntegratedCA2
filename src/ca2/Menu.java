@@ -4,8 +4,8 @@
  */
 package ca2;
 
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  *
@@ -14,15 +14,32 @@ import java.util.Scanner;
  */
 
 public class Menu implements Interfaces.AppMenu {
+    private String role;
+    private int user_id;
+    private List<String> options;
+
 
     @Override
-    public void displayMenu() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void displayMainMenu() {
+        System.out.println(this.role);
+        
+        options = Arrays.asList("Manage Account", "Generate Reports", "Add / Modify Users", "Exit");
+        
+        System.out.println("Please choose one of the following options:");
+        for (int i = 0; i < options.size(); i++ ) {
+            System.out.println((i + 1) + ") " + options.get(i));
+        }
+        
+        
+    }
+    
+    // Getters
+    public String getRole() {
+        return this.role;
     }
 
-    @Override
-    public void handleAction() {
-        throw new UnsupportedOperationException("Not supported yet."); 
+    // Setters 
+    public void setRole(String role) {
+        this.role = role;
     }
-
 }

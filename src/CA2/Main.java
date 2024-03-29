@@ -4,8 +4,8 @@
  */
 package ca2;
 
-import java.sql.ResultSet;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  *
@@ -21,6 +21,7 @@ public class Main {
      */
     
     public static void main(String[] args) {
+        
                
         // Start the menu
         Menu mainMenu = new Menu();
@@ -40,10 +41,10 @@ public class Main {
             
             // Get user role from the database
             String role = conn.getRole();
+            mainMenu.setRole(role);
             
             // Display main menu
-            
-
+            mainMenu.displayMainMenu();
         }         
         
         // Disconnect from database

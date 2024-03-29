@@ -147,13 +147,17 @@ public class MySQLDatabaseConnection implements Interfaces.DatabaseConnection {
   
     // Getters
 
+    @Override
     public boolean isLoggedIn() {
         return this.loggedIn;
     }
     
+    @Override
     public int getId(){
         return this.userId;
     }
+    
+    @Override
     public String getRole() {
         return this.userRole;
     }  
