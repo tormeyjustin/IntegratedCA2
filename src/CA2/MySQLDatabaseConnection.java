@@ -9,9 +9,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -52,9 +57,7 @@ public class MySQLDatabaseConnection implements Interfaces.DatabaseConnection {
             String username;
             String password;
             System.out.println(separator);
-            System.out.println(separator);
             System.out.println("  College LMS");
-            System.out.println(separator);
             System.out.println(separator);
             credentials = new HashMap();
             System.out.println("Enter username:");
@@ -67,8 +70,7 @@ public class MySQLDatabaseConnection implements Interfaces.DatabaseConnection {
             credentials.put("username", username);
             credentials.put("password", password);
         }
-        return credentials;
-        
+        return credentials;    
     }
 
     @Override
@@ -131,8 +133,15 @@ public class MySQLDatabaseConnection implements Interfaces.DatabaseConnection {
                 case "COURSE":
                     // Get course data
                     System.out.println("Get course data");
-                    rs = getCourseData(id);
+                {
+                    try {
+                        rs = (ResultSet) getCourseData(id);
+                    } catch (SQLException ex) {
+                        System.out.println("Error " + ex);
+                    }
+                }
                     break;
+
                 case "STUDENT":
                     // Get student data
                     System.out.println("Get Student data");
@@ -148,14 +157,13 @@ public class MySQLDatabaseConnection implements Interfaces.DatabaseConnection {
         return rs;
     }
     
-    private ResultSet getCourseData(int id) {
-        ResultSet rs = null;
+    public ArrayList<CourseModule> getCourseData(int id) throws SQLException {
         
-        String sqlquery = "SELECT m.module_name AS \"Module Name\", "
-             + "c.course_title AS \"Programme\", "
-             + "COUNT(DISTINCT em.student_id) AS \"Number of Students Enrolled\", "
-             + "CONCAT(u.first_name, ' ', u.last_name) AS \"Lecturer\", "
-             + "ro.room_name AS \"Room Assigned\" "
+        String sqlquery = "SELECT m.module_name AS \"module_name\", "
+             + "c.course_title AS \"programme\", "
+             + "COUNT(DISTINCT em.student_id) AS \"number_students\", "
+             + "CONCAT(u.first_name, ' ', u.last_name) AS \"lecturer\", "
+             + "ro.room_name AS \"room_name\" "
              + "FROM collegelms.modules m "
              + "JOIN collegelms.course_modules cm ON m.id = cm.module_id "
              + "JOIN collegelms.courses c ON cm.course_id = c.id "
@@ -165,19 +173,36 @@ public class MySQLDatabaseConnection implements Interfaces.DatabaseConnection {
              + "JOIN collegelms.rooms ro ON cm.room_id = ro.id "
              + "WHERE c.id = ? " // Placeholder for the course ID
              + "GROUP BY m.module_name, c.course_title, u.first_name, u.last_name, ro.room_name "
-             + "ORDER BY \"Module Name\"";
+             + "ORDER BY \"module_name\"";
         
         try (PreparedStatement stmt = conn.prepareStatement(sqlquery)) {
+            
+
+                // Insert the id into SQL statement
+                stmt.setInt(1, id);
                 
-                // Convert the id to String and insert into SQL statement
-                stmt.setString(1, String.valueOf(id));
+                ResultSet rs = stmt.executeQuery();
+                System.out.println(rs);
                 
-                rs = stmt.executeQuery();
+                ArrayList<CourseModule> courseData = new ArrayList<>();
+                
+                while (rs.next()) {
+                    String moduleName = rs.getString("module_name");
+                    String programme = rs.getString("programme");
+                    int numStudents = rs.getInt("number_students");
+                    String lecturer = rs.getString("lecturer");
+                    String room = rs.getString("room_name");
+                    
+                    courseData.add(new CourseModule(moduleName, programme, numStudents, lecturer, room));
+                }
+                
+                return courseData;
+                
         } catch (SQLException ex) {
                 System.out.println("Error " + ex);
             }
+        return null;
         
-        return rs;
     }
 
     @Override
@@ -193,6 +218,7 @@ public class MySQLDatabaseConnection implements Interfaces.DatabaseConnection {
             e.printStackTrace();
         }
     }
+    
   
     // Getters
 
