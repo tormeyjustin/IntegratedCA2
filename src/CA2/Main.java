@@ -35,8 +35,8 @@ public class Main {
         MySQLDatabaseConnection dbconn = new MySQLDatabaseConnection();              
         
         // Test get course data
-        //ArrayList<CourseModule> cd = conn.getCourseData(1);
-        //System.out.println(cd);
+        ArrayList<CourseModule> cd = dbconn.getCourseData(1);
+        System.out.println(cd);
         
         // Get login credentials and store in a HashMap
         HashMap credentials = mainMenu.getLoginCredentials();

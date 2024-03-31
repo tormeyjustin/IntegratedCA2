@@ -37,7 +37,6 @@ public class MySQLDatabaseConnection implements Interfaces.DatabaseConnection {
     
 
     @Override
-    @SuppressWarnings("empty-statement")
     public void login(String username, String password){
         try {
             // Connect to database
@@ -50,7 +49,7 @@ public class MySQLDatabaseConnection implements Interfaces.DatabaseConnection {
                             "FROM collegelms.users u " + 
                             "LEFT JOIN collegelms.user_roles r " +
                             "ON u.user_role = r.id WHERE u.username = ?;";
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
                 
                 // Set the value of the placeholder to username
                 stmt.setString(1, username);
@@ -77,76 +76,97 @@ public class MySQLDatabaseConnection implements Interfaces.DatabaseConnection {
             } catch (SQLException ex) {
                 System.out.println("Error " + ex);
             }
-            
-        } catch (SQLException ex) {
-            System.out.println("Error "+ ex);;
-        }  
+             
     }
     
-//    
-//    public ArrayList<CourseModule> getCourseData(int id) throws SQLException {
-//        
-//        String sqlquery = "SELECT m.module_name AS \"module_name\", "
-//             + "c.course_title AS \"programme\", "
-//             + "COUNT(DISTINCT em.student_id) AS \"number_students\", "
-//             + "CONCAT(u.first_name, ' ', u.last_name) AS \"lecturer\", "
-//             + "ro.room_name AS \"room_name\" "
-//             + "FROM collegelms.modules m "
-//             + "JOIN collegelms.course_modules cm ON m.id = cm.module_id "
-//             + "JOIN collegelms.courses c ON cm.course_id = c.id "
-//             + "LEFT JOIN collegelms.enrolment_modules em ON cm.id = em.course_id "
-//             + "JOIN collegelms.lecturers l ON cm.lecturer_id = l.id "
-//             + "JOIN collegelms.users u ON l.user_id = u.id "
-//             + "JOIN collegelms.rooms ro ON cm.room_id = ro.id "
-//             + "WHERE c.id = ? " // Placeholder for the course ID
-//             + "GROUP BY m.module_name, c.course_title, u.first_name, u.last_name, ro.room_name "
-//             + "ORDER BY \"module_name\"";
-//        
-//        try (PreparedStatement stmt = conn.prepareStatement(sqlquery)) {
-//            
-//
-//                // Insert the id into SQL statement
-//                stmt.setInt(1, id);
-//                
-//                ResultSet rs = stmt.executeQuery();
-//                System.out.println(rs);
-//                
-//                ArrayList<CourseModule> courseData = new ArrayList<>();
-//                
-//                while (rs.next()) {
-//                    String moduleName = rs.getString("module_name");
-//                    String programme = rs.getString("programme");
-//                    int numStudents = rs.getInt("number_students");
-//                    String lecturer = rs.getString("lecturer");
-//                    String room = rs.getString("room_name");
-//                    
-//                    courseData.add(new CourseModule(moduleName, programme, numStudents, lecturer, room));
-//                }
-//                
-//                return courseData;
-//                
-//        } catch (SQLException ex) {
-//                System.out.println("Error " + ex);
-//            }
-//        return null;
-//        
-//    }
-    
-    @Override
-    public void disconnect() {
-       try {
+       
+    @Override 
+    public ArrayList<CourseModule> getCourseData(int id)  {
+        try {
+            // Connect to database
             Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
-            if (conn != null && !conn.isClosed()) {
-                conn.close();
-                System.out.println("Disconnected from the database.");
+            
+            // SQL query
+            String sqlquery = "SELECT m.module_name AS \"module_name\", "
+             + "c.course_title AS \"programme\", "
+             + "COUNT(DISTINCT em.student_id) AS \"number_students\", "
+             + "CONCAT(u.first_name, ' ', u.last_name) AS \"lecturer\", "
+             + "ro.room_name AS \"room_name\" "
+             + "FROM collegelms.modules m "
+             + "JOIN collegelms.course_modules cm ON m.id = cm.module_id "
+             + "JOIN collegelms.courses c ON cm.course_id = c.id "
+             + "LEFT JOIN collegelms.enrolment_modules em ON cm.id = em.course_id "
+             + "JOIN collegelms.lecturers l ON cm.lecturer_id = l.id "
+             + "JOIN collegelms.users u ON l.user_id = u.id "
+             + "JOIN collegelms.rooms ro ON cm.room_id = ro.id "
+             + "WHERE c.id = ? " // Placeholder for the course ID
+             + "GROUP BY m.module_name, c.course_title, u.first_name, u.last_name, ro.room_name "
+             + "ORDER BY \"module_name\"";
+            PreparedStatement stmt = conn.prepareStatement(sqlquery);
+            
+            // Insert the id into SQL statement
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
                 
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+            // New ArrayList to store CourseModule objects
+            ArrayList<CourseModule> courseData = new ArrayList<>();
+                
+                while (rs.next()) {
+                    String moduleName = rs.getString("module_name");
+                    String programme = rs.getString("programme");
+                    int numStudents = rs.getInt("number_students");
+                    String lecturer = rs.getString("lecturer");
+                    String room = rs.getString("room_name");
+                    
+                    courseData.add(new CourseModule(moduleName, programme, numStudents, lecturer, room));
+                }
+                
+                return courseData;
+        } catch (SQLException ex) {
+                System.out.println("Error " + ex);  
         }
+        return null;
     }
-    
   
+    public Student getStudentData(String email) {
+        
+        try {
+            // Connect to database
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+            
+            // SQL query
+            String sqlQuery = 
+                "SELECT u.first_name, u.last_name, u.id AS student_number, c.course_title\n" +
+                "FROM CollegeLMS.users AS u\n" +
+                "JOIN CollegeLMS.students AS s ON u.id = s.user_id\n" +
+                "JOIN CollegeLMS.enrolment_modules AS em ON s.id = em.student_id\n" +
+                "JOIN CollegeLMS.courses AS c ON em.course_id = c.id\n" +
+                "WHERE u.user_email = ?;"; // email placeholder
+            
+            PreparedStatement stmt = conn.prepareStatement(sqlQuery);
+            
+            // Insert the id into SQL statement
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+                
+            
+                if (rs.next()) {
+                    String firstName = rs.getString("first_name");
+                    String lastName = rs.getString("last_name");
+                    int studentNumber = rs.getInt("student_number");
+                    String studentCourse = rs.getString("course_title");
+
+                    // New Student to store student data
+                    return new Student(firstName, lastName, studentNumber, studentCourse);
+                    
+                }
+                
+        } catch (SQLException ex) {
+                System.out.println("Error " + ex);  
+        }
+        return null;
+        
+    }
     // Getters
 
     @Override

@@ -13,10 +13,10 @@ package CA2;
 
 public class CourseModule {
     String moduleName;
-    private String programme;
-    private int enrolledStudents;
-    private String lecturerName;
-    private String room;
+    private final String programme;
+    private final int enrolledStudents;
+    private final String lecturerName;
+    private final String room;
     
     public CourseModule (String module, String programme, int numStudents, String lecturer, String room) {
         this.moduleName = module;

@@ -4,8 +4,8 @@
  */
 package Interfaces;
 
-import java.sql.ResultSet;
-import java.util.HashMap;
+import CA2.CourseModule;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,8 +16,8 @@ import java.util.HashMap;
 public interface DatabaseConnection {
       
     public void login(String username, String password);
-        
-    public void disconnect();
+    
+    public ArrayList<CourseModule> getCourseData(int id);
     
     // Getter method to check if the user is logged in
     boolean isLoggedIn();
