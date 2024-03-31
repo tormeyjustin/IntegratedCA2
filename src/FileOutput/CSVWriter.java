@@ -10,10 +10,10 @@ import java.io.IOException;
 /**
  *
  * @author Justin
- * 
+ *
  */
-
 public class CSVWriter {
+
     private String filePath;
 
     public CSVWriter(String filePath) {
@@ -21,7 +21,7 @@ public class CSVWriter {
     }
 
     public void writeCSV(String csvData) throws IOException {
-        try (FileWriter writer = new FileWriter(filePath)) {
+        try ( FileWriter writer = new FileWriter(filePath)) {
             writer.write(csvData);
         } catch (IOException e) {
             throw e;

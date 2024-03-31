@@ -5,24 +5,40 @@
 package CA2;
 
 import java.util.List;
+import java.util.StringJoiner;
 
 /**
  *
  * @author Justin
- * 
+ *
  */
-
 public class Lecturer {
+
     private String firstName;
     private String lastName;
     private String role;
-    private List modulesTeaching;
-    private List skills;
-    
-    public Lecturer (String firstName, String lastName, String role) {
+    private List<String> modulesTeaching;
+    private List<String> skills;
+
+    public Lecturer(String firstName, String lastName, String role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.role = role;
+    }
+    
+    
+    public String prepareOutput() {
+        // Create a StringBuilder object
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("Lecturer name: ").append(firstName).append(" ").append(lastName);
+        builder.append("\n");
+        builder.append("Lecturer role: ").append(role);
+        builder.append("\n");
+
+        // Convert StringBuilder to String
+        String outputString = builder.toString();
+        return outputString;
     }
 
     /**
@@ -59,5 +75,5 @@ public class Lecturer {
     public List getSkills() {
         return skills;
     }
-    
+
 }

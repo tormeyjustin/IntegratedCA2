@@ -10,10 +10,10 @@ import java.io.IOException;
 /**
  *
  * @author Justin
- * 
+ *
  */
-
 public class TXTWriter {
+
     private String filePath;
 
     public TXTWriter(String filePath) {
@@ -21,7 +21,7 @@ public class TXTWriter {
     }
 
     public void writeLines(String text) throws IOException {
-        try (FileWriter writer = new FileWriter(filePath)) {
+        try ( FileWriter writer = new FileWriter(filePath)) {
             writer.write(text);
         } catch (IOException e) {
             throw e;

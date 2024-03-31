@@ -7,22 +7,22 @@ package Interfaces;
 /**
  *
  * @author Justin
- * 
+ *
  */
-
 public interface ReportingTool {
+
     enum reportType {
         COURSE,
         STUDENT,
         LECTURER
     }
-    
+
     enum reportFormat {
         TXT,
         CSV,
         CONSOLE
     }
-    
+
     void outputReport(reportFormat format);
-    
+
 }

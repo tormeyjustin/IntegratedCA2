@@ -10,39 +10,40 @@ import java.util.Scanner;
 /**
  *
  * @author Justin
- * 
+ *
  */
-
 public class Menu implements Interfaces.AppMenu {
+
     private static final Scanner scanner = new Scanner(System.in);
     private int userId;
     private String userRole;
-    
+
     /**
      * Requests user input for database credentials
+     *
      * @return HashMap with username and password
      */
     @Override
-    public HashMap<String, String> getLoginCredentials() { 
+    public HashMap<String, String> getLoginCredentials() {
         HashMap<String, String> credentials;
-            String username;
-            String password;
-            System.out.println("----------------");
-            System.out.println("  College LMS");
-            System.out.println("----------------");
-            credentials = new HashMap();
-            System.out.println("Enter username:");
-            // Read the username provided by the user
-            username = scanner.nextLine();
-            System.out.println("Enter password:");
-            // Read the username provided by the user
-            password = scanner.nextLine();
-            // Add keys and values
-            credentials.put("username", username);
-            credentials.put("password", password);
-        return credentials;    
+        String username;
+        String password;
+        System.out.println("----------------");
+        System.out.println("  College LMS");
+        System.out.println("----------------");
+        credentials = new HashMap();
+        System.out.println("Enter username:");
+        // Read the username provided by the user
+        username = scanner.nextLine();
+        System.out.println("Enter password:");
+        // Read the username provided by the user
+        password = scanner.nextLine();
+        // Add keys and values
+        credentials.put("username", username);
+        credentials.put("password", password);
+        return credentials;
     }
-   
+
     /**
      * Displays the main application menu
      */
@@ -57,7 +58,7 @@ public class Menu implements Interfaces.AppMenu {
             System.out.println("4. Exit");
             System.out.print("Enter your choice: ");
             choice = scanner.nextInt();
-            scanner.nextLine(); 
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
@@ -65,7 +66,7 @@ public class Menu implements Interfaces.AppMenu {
                     break;
                 case 2:
                     // Admin does not have permission
-                    if (userRole.equals("admin")){
+                    if (userRole.equals("admin")) {
                         accessDenied();
                         break;
                     }
@@ -73,7 +74,7 @@ public class Menu implements Interfaces.AppMenu {
                     break;
                 case 3:
                     // Only office role has permission
-                    if (!userRole.equals("office")){
+                    if (!userRole.equals("office")) {
                         accessDenied();
                         break;
                     }
@@ -86,9 +87,9 @@ public class Menu implements Interfaces.AppMenu {
                     System.out.println("Invalid choice. Please enter 1-4.");
             }
         } while (choice != 4); // Exit when 4 is selected
-        
+
     }
-    
+
     /**
      * Displays the Manage Account Menu
      */
@@ -101,28 +102,28 @@ public class Menu implements Interfaces.AppMenu {
             System.out.println("3. Exit");
 
             choice = scanner.nextInt();
-            scanner.nextLine(); 
+            scanner.nextLine();
 
-                switch (choice) {
-                    case 1:
-                        System.out.println("Enter new username");
-                        String newUsername = scanner.nextLine();
-                        System.out.println("New username: " + newUsername);
-                        break;
-                    case 2:
-                        System.out.println("Enter new password");
-                        String newPassword = scanner.nextLine();
-                        System.out.println("New password: " + newPassword);
-                        break;
-                    case 3:
-                        System.out.println("Exiting...");
-                        break;
-                    default:
-                        System.out.println("Invalid choice. Please enter 1-3.");
+            switch (choice) {
+                case 1:
+                    System.out.println("Enter new username");
+                    String newUsername = scanner.nextLine();
+                    System.out.println("New username: " + newUsername);
+                    break;
+                case 2:
+                    System.out.println("Enter new password");
+                    String newPassword = scanner.nextLine();
+                    System.out.println("New password: " + newPassword);
+                    break;
+                case 3:
+                    System.out.println("Exiting...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please enter 1-3.");
             }
         } while (choice != 3); // Exit when 3 is selected
     }
-    
+
     /**
      * Displays the Reports selection menu
      */
@@ -136,30 +137,30 @@ public class Menu implements Interfaces.AppMenu {
             System.out.println("4. Exit");
 
             choice = scanner.nextInt();
-            scanner.nextLine(); 
+            scanner.nextLine();
 
-                switch (choice) {
-                    case 1:
-                        System.out.println("Course Report");
-                        chooseFormatMenu();
-                        break;
-                    case 2:
-                        System.out.println("Student Report");
-                        chooseFormatMenu();
-                        break;
-                    case 3:
-                        System.out.println("Lecturer Report");
-                        chooseFormatMenu();
-                        break;
-                    case 4:
-                        System.out.println("Exiting...");
-                        break;
-                    default:
-                        System.out.println("Invalid choice. Please enter 1-4.");
+            switch (choice) {
+                case 1:
+                    System.out.println("Course Report");
+                    chooseFormatMenu();
+                    break;
+                case 2:
+                    System.out.println("Student Report");
+                    chooseFormatMenu();
+                    break;
+                case 3:
+                    System.out.println("Lecturer Report");
+                    chooseFormatMenu();
+                    break;
+                case 4:
+                    System.out.println("Exiting...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please enter 1-4.");
             }
         } while (choice != 4); // Exit when 4 is selected  
     }
-    
+
     /**
      * Displays the Add / modify Users selection menu
      */
@@ -172,24 +173,34 @@ public class Menu implements Interfaces.AppMenu {
             System.out.println("3. Exit");
 
             choice = scanner.nextInt();
-            scanner.nextLine(); 
+            scanner.nextLine();
 
-                switch (choice) {
-                    case 1:
-                        System.out.println("Add User");
-                        break;
-                    case 2:
-                        System.out.println("Modify User");
-                        break;
-                    case 3:
-                        System.out.println("Exiting...");
-                        break;
-                    default:
-                        System.out.println("Invalid choice. Please enter 1-3.");
+            switch (choice) {
+                case 1:
+                    System.out.println("Add User");
+                    addUserInput();
+                    break;
+                case 2:
+                    System.out.println("Modify User");
+                    modifyUserInput();
+                    break;
+                case 3:
+                    System.out.println("Exiting...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please enter 1-3.");
             }
         } while (choice != 3); // Exit when 3 is selected  
     }
-    
+
+    public void addUserInput() {
+        System.out.println("\n--- Add A New User ---");
+    }
+
+    public void modifyUserInput() {
+        System.out.println("\n--- Modify A New User ---");
+    }
+
     /**
      * Displays the output format selection menu
      */
@@ -203,36 +214,34 @@ public class Menu implements Interfaces.AppMenu {
             System.out.println("3. Exit");
 
             choice = scanner.nextInt();
-            scanner.nextLine(); 
+            scanner.nextLine();
 
-                switch (choice) {
-                    case 1:
-                        System.out.println("TXT file");
-                        break;
-                    case 2:
-                        System.out.println("CSV file");
-                        break;
-                    case 3:
-                        System.out.println("Console");
-                        break;
-                    case 4:
-                        System.out.println("Exiting...");
-                        break;
-                    default:
-                        System.out.println("Invalid choice. Please enter 1-4.");
+            switch (choice) {
+                case 1:
+                    System.out.println("TXT file");
+                    break;
+                case 2:
+                    System.out.println("CSV file");
+                    break;
+                case 3:
+                    System.out.println("Console");
+                    break;
+                case 4:
+                    System.out.println("Exiting...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please enter 1-4.");
             }
         } while (choice != 4); // Exit when 3 is selected  
 
     }
-    
-    
-    
-    
+
     /**
-     * Prints  a generic "Access denied" message
+     * Prints a generic "Access denied" message
      */
     public void accessDenied() {
-        System.out.println("You do not have permission to access this section");
+        System.out.println("\nYou do not have permission to access this section");
+        System.out.println("Please choose from the following options:");
     }
 
     /**
@@ -248,7 +257,5 @@ public class Menu implements Interfaces.AppMenu {
     public void setUserRole(String user_role) {
         this.userRole = user_role;
     }
-    
-    
-    
+
 }
