@@ -4,9 +4,7 @@
  */
 package CA2;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -16,8 +14,6 @@ import java.util.Scanner;
  */
 
 public class Menu implements Interfaces.AppMenu {
-    private String role;
-    private int user_id;
     private static final Scanner scanner = new Scanner(System.in);
     
     
@@ -160,14 +156,5 @@ public class Menu implements Interfaces.AppMenu {
             }
         } while (choice != 3); // Exit when 3 is selected  
     }
-         
-    // Getters
-    public String getRole() {
-        return this.role;
-    }
-
-    // Setters 
-    public void setRole(String role) {
-        this.role = role;
-    }
+    
 }

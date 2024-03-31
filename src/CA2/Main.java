@@ -41,12 +41,10 @@ public class Main {
         // Get login credentials and store in a HashMap
         HashMap credentials = mainMenu.getLoginCredentials();
         
-        // Cast HashMap values to strings and login
-        dbconn.login((String) credentials.get("username"), (String) credentials.get("password"));
+        // Create a user from the data retrieve from the database
+        User menuUser;
+        menuUser = dbconn.login((String) credentials.get("username"), (String) credentials.get("password"));
         
-        // Get user role from the database
-        String role = dbconn.getRole();
-        mainMenu.setRole(role);
 
         // Display main menu
         mainMenu.displayMainMenu();

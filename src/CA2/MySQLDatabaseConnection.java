@@ -37,7 +37,7 @@ public class MySQLDatabaseConnection implements Interfaces.DatabaseConnection {
     
 
     @Override
-    public void login(String username, String password){
+    public User login(String username, String password){
         try {
             // Connect to database
             Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
@@ -65,6 +65,10 @@ public class MySQLDatabaseConnection implements Interfaces.DatabaseConnection {
                         userId = Integer.parseInt(rs.getString("id"));
                         
                         System.out.println("Logged in successfully");
+                        
+                        // If logged in return a new User
+                        return new User(userId, userRole);
+                        
                     } else {
                         System.out.println("Username or password not found.");
                     }
@@ -76,10 +80,10 @@ public class MySQLDatabaseConnection implements Interfaces.DatabaseConnection {
             } catch (SQLException ex) {
                 System.out.println("Error " + ex);
             }
-             
+        return null;   
     }
     
-       
+          
     @Override 
     public ArrayList<CourseModule> getCourseData(int id)  {
         try {
