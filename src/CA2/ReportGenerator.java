@@ -17,12 +17,11 @@ import java.util.List;
  */
 public class ReportGenerator {
     
-    private enum reportFormat {
+    public enum OutputFormat {
         TXT,
         CSV,
         CONSOLE
-        
-    }
+}
     
     public static <T> List<String> generateReportData(ArrayList<T> items) {
         List<String> reportLines = new ArrayList<>();

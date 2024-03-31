@@ -5,7 +5,6 @@
 package Interfaces;
 
 import java.util.HashMap;
-import java.util.List;
 
 /**
  *
@@ -14,8 +13,9 @@ import java.util.List;
  */
 
 public interface AppMenu {
-        
-    void displayMainMenu();
     
+    public HashMap<String, String>getLoginCredentials();
+    
+    void displayMainMenu(); 
 
 }

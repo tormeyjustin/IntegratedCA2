@@ -5,11 +5,10 @@
 package CA2;
 
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Scanner;
 
 /**
  *
@@ -31,7 +30,7 @@ public class Main {
                
         // Start the menu
         Menu mainMenu = new Menu();
-        
+
         // Connect to database
         MySQLDatabaseConnection conn = new MySQLDatabaseConnection();              
         conn.connect();
@@ -39,10 +38,10 @@ public class Main {
         // Test get course data
         ArrayList<CourseModule> cd = conn.getCourseData(1);
         System.out.println(cd);
-        ReportGenerator.outputReportToCSV(cd, "fileName");
+        ReportGenerator.generateReportData(cd);
         
         // Get login credentials and store in a HashMap
-        HashMap credentials = conn.getLoginCredentials();
+        HashMap credentials = mainMenu.getLoginCredentials();
         
         // Cast HashMap values to strings and login
         conn.login((String) credentials.get("username"), (String) credentials.get("password"));
@@ -54,13 +53,13 @@ public class Main {
             String role = conn.getRole();
             mainMenu.setRole(role);
             
-            // Testing
-            ResultSet rs = conn.getReportData("COURSE", 1);
-            System.out.println(rs);
-                      
             
             // Display main menu
             mainMenu.displayMainMenu();
+            
+            
+            // Display
+
             
         }         
         

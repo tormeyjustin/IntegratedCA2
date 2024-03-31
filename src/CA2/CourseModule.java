@@ -27,45 +27,26 @@ public class CourseModule {
     }
     
     
+    // Getters
+    
     public String getModuleName() {
         return moduleName;
-    }
-
-    public void setModuleName(String moduleName) {
-        this.moduleName = moduleName;
     }
 
     public String getProgramme() {
         return programme;
     }
 
-    public void setProgramme(String Programme) {
-        this.programme = Programme;
-    }
-
     public int getEnrolledStudents() {
         return enrolledStudents;
-    }
-
-    public void setEnrolledStudents(int enrolledStudents) {
-        this.enrolledStudents = enrolledStudents;
     }
 
     public String getLecturerName() {
         return lecturerName;
     }
 
-    public void setLecturerName(String lecturerName) {
-        this.lecturerName = lecturerName;
-    }
-
     public String getRoom() {
         return room;
     }
-
-    public void setRoom(String room) {
-        this.room = room;
-    }
-    
-    
+   
 }

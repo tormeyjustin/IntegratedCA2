@@ -9,14 +9,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 /**
@@ -50,28 +46,7 @@ public class MySQLDatabaseConnection implements Interfaces.DatabaseConnection {
         }
     }
     
-    @Override
-    public HashMap<String, String> getLoginCredentials() {
-        HashMap<String, String> credentials;
-        try (Scanner sc = new Scanner(System.in)) {
-            String username;
-            String password;
-            System.out.println(separator);
-            System.out.println("  College LMS");
-            System.out.println(separator);
-            credentials = new HashMap();
-            System.out.println("Enter username:");
-            // Read the username provided by the user
-            username = sc.nextLine();
-            System.out.println("Enter password:");
-            // Read the username provided by the user
-            password = sc.nextLine();
-            // Add keys and values
-            credentials.put("username", username);
-            credentials.put("password", password);
-        }
-        return credentials;    
-    }
+
 
     @Override
     public void login(String username, String password){

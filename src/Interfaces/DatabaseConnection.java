@@ -16,9 +16,7 @@ import java.util.HashMap;
 public interface DatabaseConnection {
     
     public void connect();
-    
-    public HashMap<String, String>getLoginCredentials();
-    
+      
     public void login(String username, String password);
     
     public ResultSet getReportData(String reportType, int id);
