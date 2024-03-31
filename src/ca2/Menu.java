@@ -54,7 +54,7 @@ public class Menu implements Interfaces.AppMenu {
             System.out.println("4. Exit");
             System.out.print("Enter your choice: ");
             choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline left-over
+            scanner.nextLine(); 
 
             switch (choice) {
                 case 1:
@@ -77,16 +77,88 @@ public class Menu implements Interfaces.AppMenu {
     }
     
     public void manageAccount() {
-        System.out.println("Manage Account");
+        int choice;
+        do {
+            System.out.println("\n--- Manage Account ---");
+            System.out.println("1. Change username");
+            System.out.println("2. Change password");
+            System.out.println("3. Exit");
+
+            choice = scanner.nextInt();
+            scanner.nextLine(); 
+
+                switch (choice) {
+                    case 1:
+                        System.out.println("Change username");
+                        break;
+                    case 2:
+                        System.out.println("Change password");
+                        break;
+                    case 3:
+                        System.out.println("Exiting...");
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please enter 1-3.");
+            }
+        } while (choice != 3); // Exit when 3 is selected
     }
     
     public void generateReports() {
-        System.out.println("Generate Reports");
-        
+        int choice;
+        do {
+            System.out.println("\n--- Generate Reports ---");
+            System.out.println("1. Course Report");
+            System.out.println("2. Student Report");
+            System.out.println("3. Lecturer Report");
+            System.out.println("4. Exit");
+
+            choice = scanner.nextInt();
+            scanner.nextLine(); 
+
+                switch (choice) {
+                    case 1:
+                        System.out.println("Course Report");
+                        break;
+                    case 2:
+                        System.out.println("Student Report");
+                        break;
+                    case 3:
+                        System.out.println("Lecturer Report");
+                        break;
+                    case 4:
+                        System.out.println("Exiting...");
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please enter 1-4.");
+            }
+        } while (choice != 4); // Exit when 4 is selected  
     }
     
     public void addModifyUsers() {
-        System.out.println("Add / modify users");
+        int choice;
+        do {
+            System.out.println("\n--- Add Modify Users ---");
+            System.out.println("1. Add User");
+            System.out.println("2. Modify User");
+            System.out.println("3. Exit");
+
+            choice = scanner.nextInt();
+            scanner.nextLine(); 
+
+                switch (choice) {
+                    case 1:
+                        System.out.println("Add User");
+                        break;
+                    case 2:
+                        System.out.println("Modify User");
+                        break;
+                    case 3:
+                        System.out.println("Exiting...");
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please enter 1-4.");
+            }
+        } while (choice != 3); // Exit when 3 is selected  
     }
          
     // Getters

@@ -32,39 +32,25 @@ public class Main {
         Menu mainMenu = new Menu();
 
         // Connect to database
-        MySQLDatabaseConnection conn = new MySQLDatabaseConnection();              
-        conn.connect();
+        MySQLDatabaseConnection dbconn = new MySQLDatabaseConnection();              
         
         // Test get course data
-        ArrayList<CourseModule> cd = conn.getCourseData(1);
-        System.out.println(cd);
-        ReportGenerator.generateReportData(cd);
+        //ArrayList<CourseModule> cd = conn.getCourseData(1);
+        //System.out.println(cd);
         
         // Get login credentials and store in a HashMap
         HashMap credentials = mainMenu.getLoginCredentials();
         
         // Cast HashMap values to strings and login
-        conn.login((String) credentials.get("username"), (String) credentials.get("password"));
+        dbconn.login((String) credentials.get("username"), (String) credentials.get("password"));
+        
+        // Get user role from the database
+        String role = dbconn.getRole();
+        mainMenu.setRole(role);
 
-        // Check if logged in
-        if (conn.isLoggedIn()) {
-            
-            // Get user role from the database
-            String role = conn.getRole();
-            mainMenu.setRole(role);
-            
-            
-            // Display main menu
-            mainMenu.displayMainMenu();
-            
-            
-            // Display
-
+        // Display main menu
+        mainMenu.displayMainMenu();
             
         }         
-        
-        // Disconnect from database
-        conn.disconnect();
+
     }
-        
-}

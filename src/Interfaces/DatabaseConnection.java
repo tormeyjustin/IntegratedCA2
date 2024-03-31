@@ -14,13 +14,9 @@ import java.util.HashMap;
  */
 
 public interface DatabaseConnection {
-    
-    public void connect();
       
     public void login(String username, String password);
-    
-    public ResultSet getReportData(String reportType, int id);
-    
+        
     public void disconnect();
     
     // Getter method to check if the user is logged in
