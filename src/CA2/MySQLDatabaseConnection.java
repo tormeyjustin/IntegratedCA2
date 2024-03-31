@@ -22,8 +22,8 @@ import java.util.ArrayList;
 public class MySQLDatabaseConnection implements Interfaces.DatabaseConnection {
     // DB credentials
     private final String DB_URL = "jdbc:mysql://localhost/collegelms";
-    private final String USER = "pooa";
-    private final String PASSWORD = "pooa";
+    private final String USER = "pooa2024";
+    private final String PASSWORD = "pooa2024";
     
     
     // Logged in to DB status for an app user
