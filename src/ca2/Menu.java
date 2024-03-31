@@ -195,6 +195,7 @@ public class Menu implements Interfaces.AppMenu {
 
     public void addUserInput() {
         System.out.println("\n--- Add A New User ---");
+        
     }
 
     public void modifyUserInput() {
