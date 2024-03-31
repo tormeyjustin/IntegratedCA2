@@ -5,6 +5,8 @@
 package Interfaces;
 
 import CA2.CourseModule;
+import CA2.Lecturer;
+import CA2.Student;
 import java.util.ArrayList;
 
 /**
@@ -18,6 +20,10 @@ public interface DatabaseConnection {
     public void login(String username, String password);
     
     public ArrayList<CourseModule> getCourseData(int id);
+    
+    public Student getStudentData(String email);
+    
+    public Lecturer getLecturerData(int id);
     
     // Getter method to check if the user is logged in
     boolean isLoggedIn();

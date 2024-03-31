@@ -128,6 +128,7 @@ public class MySQLDatabaseConnection implements Interfaces.DatabaseConnection {
         return null;
     }
   
+    @Override
     public Student getStudentData(String email) {
         
         try {
@@ -167,7 +168,49 @@ public class MySQLDatabaseConnection implements Interfaces.DatabaseConnection {
         return null;
         
     }
-    // Getters
+    
+    @Override
+    public Lecturer getLecturerData(int id) {
+        try {
+            // Connect to database
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+            
+            // SQL query
+            String sqlQuery =
+               "SELECT u.first_name AS lecturer_first_name, u.last_name AS lecturer_last_name, lr.role_name AS lecturer_role, " +
+               "GROUP_CONCAT(e.expertise_subject SEPARATOR ', ') AS concatenated_expertise " +
+               "FROM collegelms.users u " +
+               "JOIN collegelms.lecturers l ON u.id = l.user_id " +
+               "JOIN collegelms.lecturer_roles lr ON l.role_id = lr.id " +
+               "LEFT JOIN collegelms.lecturer_expertise le ON l.id = le.lecturer_id " +
+               "LEFT JOIN collegelms.expertise e ON le.expertise_id = e.id " +
+               "WHERE l.id = ? " + // Lecturer ID
+               "GROUP BY u.first_name, u.last_name, lr.role_name;";
+            
+            PreparedStatement stmt = conn.prepareStatement(sqlQuery);
+            
+            // Insert the lecturer id into SQL statement
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+                
+            
+                if (rs.next()) {
+                    String firstName = rs.getString("lecturer_first_name");
+                    String lastName = rs.getString("lecturer_last_name");
+                    String role = rs.getString("lecturer_role");
+
+                    // New Student to store student data
+                    return new Lecturer(firstName, lastName, role);
+                    
+                }
+                
+        } catch (SQLException ex) {
+                System.out.println("Error " + ex);  
+        }
+        return null;
+    }
+
+// Getters
 
     @Override
     public boolean isLoggedIn() {
@@ -183,5 +226,7 @@ public class MySQLDatabaseConnection implements Interfaces.DatabaseConnection {
     public String getRole() {
         return this.userRole;
     }  
+
+    
 
 }
