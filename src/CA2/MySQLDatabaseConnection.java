@@ -144,10 +144,9 @@ public class MySQLDatabaseConnection implements Interfaces.DatabaseConnection {
             
             PreparedStatement stmt = conn.prepareStatement(sqlQuery);
             
-            // Insert the id into SQL statement
+            // Insert the email into SQL statement
             stmt.setString(1, email);
             ResultSet rs = stmt.executeQuery();
-                
             
                 if (rs.next()) {
                     String firstName = rs.getString("first_name");
@@ -156,9 +155,10 @@ public class MySQLDatabaseConnection implements Interfaces.DatabaseConnection {
                     String studentCourse = rs.getString("course_title");
 
                     // New Student to store student data
-                    return new Student(firstName, lastName, studentNumber, studentCourse);
-                    
+                    return new Student(firstName, lastName, studentNumber, studentCourse); 
                 }
+                
+            conn.close();   
                 
         } catch (SQLException ex) {
                 System.out.println("Error " + ex);  
@@ -168,7 +168,7 @@ public class MySQLDatabaseConnection implements Interfaces.DatabaseConnection {
     }
     
     @Override
-    public Lecturer getLecturerData(int id) {
+    public Lecturer getLecturerData(int userId) {
         try {
             // Connect to database
             Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
@@ -188,9 +188,8 @@ public class MySQLDatabaseConnection implements Interfaces.DatabaseConnection {
             PreparedStatement stmt = conn.prepareStatement(sqlQuery);
             
             // Insert the lecturer id into SQL statement
-            stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
-                
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();              
             
                 if (rs.next()) {
                     String firstName = rs.getString("lecturer_first_name");
@@ -202,13 +201,43 @@ public class MySQLDatabaseConnection implements Interfaces.DatabaseConnection {
                     
                 }
                 
+            conn.close();
+                
         } catch (SQLException ex) {
                 System.out.println("Error " + ex);  
         }
         return null;
     }
+    
+    public void changeUsername(int userId, String username) {
+        try {
+            // Connect to database
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+            
+            // SQL query
+            String sqlQuery = "UPDATE Collegelms.users \"\n" +
+"                            + \"SET username = ? \"\n" +
+"                            + \"WHERE id = ?;";
+            
+            PreparedStatement stmt = conn.prepareStatement(sqlQuery);
+            
+            // Insert the new username into the SQL statement
+            stmt.setString(1, username);
+            
+            // Insert the curent user id into SQL statement
+            stmt.setInt(2, userId);
+            
+            stmt.executeQuery(); 
+            
+            conn.close();
+            
+        } catch (SQLException ex) {
+                System.out.println("Error " + ex);  
+        }
 
-// Getters
+    }
+
+    // Getters
 
     @Override
     public boolean isLoggedIn() {

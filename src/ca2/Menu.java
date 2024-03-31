@@ -20,7 +20,7 @@ public class Menu implements Interfaces.AppMenu {
     
     /**
      * Requests user input for database credentials
-     * @return HashMap of user credentials
+     * @return HashMap with username and password
      */
     @Override
     public HashMap<String, String> getLoginCredentials() { 
@@ -105,10 +105,14 @@ public class Menu implements Interfaces.AppMenu {
 
                 switch (choice) {
                     case 1:
-                        System.out.println("Change username");
+                        System.out.println("Enter new username");
+                        String newUsername = scanner.nextLine();
+                        System.out.println("New username: " + newUsername);
                         break;
                     case 2:
-                        System.out.println("Change password");
+                        System.out.println("Enter new password");
+                        String newPassword = scanner.nextLine();
+                        System.out.println("New password: " + newPassword);
                         break;
                     case 3:
                         System.out.println("Exiting...");
@@ -178,7 +182,7 @@ public class Menu implements Interfaces.AppMenu {
                         System.out.println("Exiting...");
                         break;
                     default:
-                        System.out.println("Invalid choice. Please enter 1-4.");
+                        System.out.println("Invalid choice. Please enter 1-3.");
             }
         } while (choice != 3); // Exit when 3 is selected  
     }

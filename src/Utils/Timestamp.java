@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 /**
  *
  * @author Justin
+ * Timestamp to be appended to output files to avoid overwriting existing files
  * 
  */
 
