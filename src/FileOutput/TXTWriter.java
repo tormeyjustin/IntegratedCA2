@@ -6,7 +6,6 @@ package FileOutput;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
 
 /**
  *
@@ -21,12 +20,9 @@ public class TXTWriter {
         this.filePath = filePath;
     }
 
-    public void writeLines(List<String> lines) throws IOException {
+    public void writeLines(String text) throws IOException {
         try (FileWriter writer = new FileWriter(filePath)) {
-            for (String line : lines) {
-                writer.write(line);
-                writer.write("\n"); // Append a newline after each line
-            }
+            writer.write(text);
         } catch (IOException e) {
             throw e;
         }

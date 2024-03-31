@@ -141,12 +141,15 @@ public class Menu implements Interfaces.AppMenu {
                 switch (choice) {
                     case 1:
                         System.out.println("Course Report");
+                        chooseFormatMenu();
                         break;
                     case 2:
                         System.out.println("Student Report");
+                        chooseFormatMenu();
                         break;
                     case 3:
                         System.out.println("Lecturer Report");
+                        chooseFormatMenu();
                         break;
                     case 4:
                         System.out.println("Exiting...");
@@ -187,7 +190,40 @@ public class Menu implements Interfaces.AppMenu {
         } while (choice != 3); // Exit when 3 is selected  
     }
     
-    
+    /**
+     * Displays the output format selection menu
+     */
+    public void chooseFormatMenu() {
+        int choice;
+        do {
+            System.out.println("\n--- Choose Report Format ---");
+            System.out.println("1. TXT file");
+            System.out.println("2. CSV file");
+            System.out.println("3. Console");
+            System.out.println("3. Exit");
+
+            choice = scanner.nextInt();
+            scanner.nextLine(); 
+
+                switch (choice) {
+                    case 1:
+                        System.out.println("TXT file");
+                        break;
+                    case 2:
+                        System.out.println("CSV file");
+                        break;
+                    case 3:
+                        System.out.println("Console");
+                        break;
+                    case 4:
+                        System.out.println("Exiting...");
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please enter 1-4.");
+            }
+        } while (choice != 4); // Exit when 3 is selected  
+
+    }
     
     
     

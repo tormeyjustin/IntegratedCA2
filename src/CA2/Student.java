@@ -24,6 +24,18 @@ public class Student {
 
     } 
     
+    public String prepareOutput () {
+        // Create a StringBuilder object
+        StringBuilder builder = new StringBuilder();
+        
+        builder.append("Student name: ").append(firstName).append(" ").append(lastName);
+        builder.append("Student number: ").append(studentNumber);
+        builder.append("Course enrolled: ").append(studentCourse);
+        
+        // Convert StringBuilder to String
+        String outputString = builder.toString();
+        return outputString;
+    }
 
     /**
      * @return the firstName

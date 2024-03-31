@@ -4,6 +4,9 @@
  */
 package FileOutput;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 /**
  *
  * @author Justin
@@ -11,15 +14,17 @@ package FileOutput;
  */
 
 public class CSVWriter {
-    
-    public CSVWriter(String filename) {
-    
+    private String filePath;
+
+    public CSVWriter(String filePath) {
+        this.filePath = filePath;
     }
 
-    public void writeData(String data) {
-    // Write data to CSV file
-    
+    public void writeCSV(String csvData) throws IOException {
+        try (FileWriter writer = new FileWriter(filePath)) {
+            writer.write(csvData);
+        } catch (IOException e) {
+            throw e;
+        }
     }
-
-    
 }
