@@ -34,20 +34,19 @@ public class Main {
         // Connect to database
         MySQLDatabaseConnection dbconn = new MySQLDatabaseConnection();              
         
-        // Test get course data
-        ArrayList<CourseModule> cd = dbconn.getCourseData(1);
-        System.out.println(cd);
-        
         // Get login credentials and store in a HashMap
         HashMap credentials = mainMenu.getLoginCredentials();
         
-        // Create a user from the data retrieve from the database
-        User menuUser;
-        menuUser = dbconn.login((String) credentials.get("username"), (String) credentials.get("password"));
+        // Login to database
+        dbconn.login((String) credentials.get("username"), (String) credentials.get("password"));
         
+        // Set menu access and user id
+        mainMenu.setUserId(dbconn.getId());
+        mainMenu.setUserRole(dbconn.getRole());
 
         // Display main menu
         mainMenu.displayMainMenu();
+        
             
         }         
 

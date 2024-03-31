@@ -18,13 +18,13 @@ public class User {
         LECTURER
     }
     
-    private final int user_id;
+    private int user_id;
     private final String first_name;
     private final String last_name;
     private final String username;
     private String user_email;
     private final String password;
-    private final String user_role;
+    private String user_role;
     
     public User (int id, String user_role ) {
         this.user_id = id;
@@ -43,6 +43,20 @@ public class User {
         this.username = username;
         this.password = password;
         this.user_role = user_role;
+    }
+
+    /**
+     * @return the user_id
+     */
+    public int getUser_id() {
+        return user_id;
+    }
+
+    /**
+     * @return the user_role
+     */
+    public String getUser_role() {
+        return user_role;
     }
     
 }

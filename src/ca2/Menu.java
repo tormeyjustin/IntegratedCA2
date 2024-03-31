@@ -15,8 +15,13 @@ import java.util.Scanner;
 
 public class Menu implements Interfaces.AppMenu {
     private static final Scanner scanner = new Scanner(System.in);
+    private int userId;
+    private String userRole;
     
-    
+    /**
+     * Requests user input for database credentials
+     * @return HashMap of user credentials
+     */
     @Override
     public HashMap<String, String> getLoginCredentials() { 
         HashMap<String, String> credentials;
@@ -38,7 +43,9 @@ public class Menu implements Interfaces.AppMenu {
         return credentials;    
     }
    
-
+    /**
+     * Displays the main application menu
+     */
     @Override
     public void displayMainMenu() {
         int choice;
@@ -57,9 +64,19 @@ public class Menu implements Interfaces.AppMenu {
                     manageAccount();
                     break;
                 case 2:
-                    generateReports();
+                    // Admin does not have permission
+                    if (userRole.equals("admin")){
+                        accessDenied();
+                        break;
+                    }
+                    reportsMenu();
                     break;
                 case 3:
+                    // Only office role has permission
+                    if (!userRole.equals("office")){
+                        accessDenied();
+                        break;
+                    }
                     addModifyUsers();
                     break;
                 case 4:
@@ -72,6 +89,9 @@ public class Menu implements Interfaces.AppMenu {
         
     }
     
+    /**
+     * Displays the Manage Account Menu
+     */
     public void manageAccount() {
         int choice;
         do {
@@ -99,7 +119,10 @@ public class Menu implements Interfaces.AppMenu {
         } while (choice != 3); // Exit when 3 is selected
     }
     
-    public void generateReports() {
+    /**
+     * Displays the Reports selection menu
+     */
+    public void reportsMenu() {
         int choice;
         do {
             System.out.println("\n--- Generate Reports ---");
@@ -130,6 +153,9 @@ public class Menu implements Interfaces.AppMenu {
         } while (choice != 4); // Exit when 4 is selected  
     }
     
+    /**
+     * Displays the Add / modify Users selection menu
+     */
     public void addModifyUsers() {
         int choice;
         do {
@@ -156,5 +182,33 @@ public class Menu implements Interfaces.AppMenu {
             }
         } while (choice != 3); // Exit when 3 is selected  
     }
+    
+    
+    
+    
+    
+    
+    /**
+     * Prints  a generic "Access denied" message
+     */
+    public void accessDenied() {
+        System.out.println("You do not have permission to access this section");
+    }
+
+    /**
+     * @param user_id the user_id to set
+     */
+    public void setUserId(int user_id) {
+        this.userId = user_id;
+    }
+
+    /**
+     * @param user_role the user_role to set
+     */
+    public void setUserRole(String user_role) {
+        this.userRole = user_role;
+    }
+    
+    
     
 }

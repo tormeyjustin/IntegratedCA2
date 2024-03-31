@@ -7,7 +7,6 @@ package Interfaces;
 import CA2.CourseModule;
 import CA2.Lecturer;
 import CA2.Student;
-import CA2.User;
 import java.util.ArrayList;
 
 /**
@@ -18,7 +17,14 @@ import java.util.ArrayList;
 
 public interface DatabaseConnection {
       
-    public User login(String username, String password);
+    /**
+     *
+     * @param username database access username
+     * @param password database access password
+     * 
+     */
+    
+    public void login(String username, String password);
     
     public ArrayList<CourseModule> getCourseData(int id);
     

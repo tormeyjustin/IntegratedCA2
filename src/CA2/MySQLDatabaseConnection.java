@@ -11,8 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 /**
@@ -37,7 +35,7 @@ public class MySQLDatabaseConnection implements Interfaces.DatabaseConnection {
     
 
     @Override
-    public User login(String username, String password){
+    public void login(String username, String password){
         try {
             // Connect to database
             Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
@@ -64,11 +62,7 @@ public class MySQLDatabaseConnection implements Interfaces.DatabaseConnection {
                         userRole = rs.getString("role_name");
                         userId = Integer.parseInt(rs.getString("id"));
                         
-                        System.out.println("Logged in successfully");
-                        
-                        // If logged in return a new User
-                        return new User(userId, userRole);
-                        
+                        System.out.println("Logged in successfully as " + userRole + " user.");
                     } else {
                         System.out.println("Username or password not found.");
                     }
@@ -80,10 +74,10 @@ public class MySQLDatabaseConnection implements Interfaces.DatabaseConnection {
             } catch (SQLException ex) {
                 System.out.println("Error " + ex);
             }
-        return null;   
+             
     }
     
-          
+       
     @Override 
     public ArrayList<CourseModule> getCourseData(int id)  {
         try {
